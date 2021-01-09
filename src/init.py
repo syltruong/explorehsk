@@ -1,11 +1,12 @@
 from typing import List
 
+from collections import defaultdict
 import fasttext
 import numpy as np
 import pandas as pd
 from loguru import logger
 
-from config import PATH_TO_FASTTEXT_BIN, PATH_TO_HSK_CSV, PROJECTOR_DATA_DIR
+from src.config import PATH_TO_FASTTEXT_BIN, PATH_TO_HSK_CSV, PROJECTOR_DATA_DIR
 
 
 def get_ft_model():
@@ -22,16 +23,39 @@ def get_embeddings(
     )
 
     logger.debug("Begin get embeddings...")
+    if etymologic:
+        char_to_words = get_char_to_words_map(words_list)
+        char_embeddings = get_char_embeddings(ft_model, char_to_words)
+
     for i, word in enumerate(words_list):
         if etymologic:
             out_embeddings[i, :] = np.mean(
-                [ft_model.get_word_vector(char) for char in word]
+                [char_embeddings[char] for char in word], axis=0
             )
         else:
             out_embeddings[i, :] = ft_model.get_word_vector(word)
 
     logger.debug(f"Return embeddings of shape {out_embeddings.shape}")
     return out_embeddings.astype(np.float32)
+
+
+def get_char_to_words_map(words_list: List[str]):
+
+    char_to_words = defaultdict(list)
+
+    for word in words_list:
+        for char in word:
+            char_to_words[char].append(word)
+
+    return char_to_words
+
+
+def get_char_embeddings(ft_model, char_to_words):
+    char_embeddings = {
+        char: np.mean([ft_model.get_word_vector(word) for word in words], axis=0)
+        for char, words in char_to_words.items()
+    }
+    return char_embeddings
 
 
 def main():
