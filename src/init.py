@@ -8,18 +8,30 @@ from loguru import logger
 from config import PATH_TO_FASTTEXT_BIN, PATH_TO_HSK_CSV, PROJECTOR_DATA_DIR
 
 
-def get_embeddings(words_list: List[str]) -> np.ndarray:
+def get_ft_model():
     logger.debug("Load fasttext model")
     ft = fasttext.load_model(PATH_TO_FASTTEXT_BIN.as_posix())
+    return ft
 
-    out_embeddings = np.zeros((len(words_list), ft.get_dimension()), dtype=np.float32)
+
+def get_embeddings(
+    ft_model, words_list: List[str], etymologic: bool = False
+) -> np.ndarray:
+    out_embeddings = np.zeros(
+        (len(words_list), ft_model.get_dimension()), dtype=np.float32
+    )
 
     logger.debug("Begin get embeddings...")
     for i, word in enumerate(words_list):
-        out_embeddings[i, :] = ft.get_word_vector(word)
+        if etymologic:
+            out_embeddings[i, :] = np.mean(
+                [ft_model.get_word_vector(char) for char in word]
+            )
+        else:
+            out_embeddings[i, :] = ft_model.get_word_vector(word)
 
     logger.debug(f"Return embeddings of shape {out_embeddings.shape}")
-    return out_embeddings
+    return out_embeddings.astype(np.float32)
 
 
 def main():
@@ -27,9 +39,15 @@ def main():
 
     out_stem = PATH_TO_HSK_CSV.stem
 
+    # load model
+    ft_model = get_ft_model()
+
     # export embeddings
-    embeddings = get_embeddings(df["Word"]).astype(np.float32)
-    embeddings.tofile(PROJECTOR_DATA_DIR / f"{out_stem}.bytes")
+    embeddings = get_embeddings(ft_model, df["Word"])
+    embeddings.tofile(PROJECTOR_DATA_DIR / f"{out_stem}_semantic.bytes")
+
+    embeddings = get_embeddings(ft_model, df["Word"], etymologic=True)
+    embeddings.tofile(PROJECTOR_DATA_DIR / f"{out_stem}_etymologic.bytes")
 
     # export labels
     df.to_csv(PROJECTOR_DATA_DIR / f"{out_stem}.tsv", sep="\t", index=False)
