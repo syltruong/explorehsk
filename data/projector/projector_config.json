@@ -1,0 +1,23 @@
+{
+  "embeddings": [
+    {
+      "tensorName": "HSK4 semantic",
+      "tensorShape": [
+        1203,
+        300
+      ],
+      "tensorPath": "data/projector/hsk4_semantic.bytes",
+      "metadataPath": "data/projector/hsk4.tsv"
+    },
+    {
+      "tensorName": "HSK4 etymologic",
+      "tensorShape": [
+        1203,
+        300
+      ],
+      "tensorPath": "data/projector/hsk4_etymologic.bytes",
+      "metadataPath": "data/projector/hsk4.tsv"
+    }
+  ],
+  "modelCheckpointPath": "Demo datasets"
+}
