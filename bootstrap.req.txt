@@ -8,3 +8,4 @@ ipywidgets
 wget
 pylint
 black
+fasttext
