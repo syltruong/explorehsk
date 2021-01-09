@@ -1,2 +1,5 @@
 .devcontainer/*
 .vscode/*
+*_pycache_*
+*.bytes
+*.tsv
