@@ -9,7 +9,10 @@ RUN pip install -r requirements.txt
 RUN pip freeze > requirements.txt
 
 # install zh language, results in 13Gb size image
+# this creates a file `/cc.zh.300.bin`
 RUN python -c "import fasttext.util; fasttext.util.download_model('zh')"
+
+RUN rm /cc.zh.300.bin.gz
 
 COPY . /app
 ENV PYTHONPATH "${PYTHONPATH}:/app"
