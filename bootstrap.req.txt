@@ -10,3 +10,4 @@ pylint
 black
 fasttext
 gunicorn
+flask
