@@ -6,5 +6,5 @@ DOCKER_IMAGE_NAME = my-docker-image
 .PHONY: install-dependencies
 install-dependencies:
 	cp bootstrap.req.txt requirements.txt
-	docker build -t $(DOCKER_IMAGE_NAME) .
+	docker build --target python-basic -t $(DOCKER_IMAGE_NAME) .
 	docker run --rm $(DOCKER_IMAGE_NAME) cat requirements.txt > requirements.txt
