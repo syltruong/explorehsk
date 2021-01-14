@@ -5,8 +5,8 @@ RUN apt-get update
 COPY requirements.txt .
 
 RUN python -m pip install --upgrade pip
-RUN pip install -r requirements.dev.txt
-RUN pip freeze > requirements.dev.txt
+RUN pip install -r requirements.txt
+RUN pip freeze > requirements.txt
 
 COPY . /app
 ENV PYTHONPATH "${PYTHONPATH}:/app"
