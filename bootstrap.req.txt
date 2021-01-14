@@ -9,3 +9,5 @@ wget
 pylint
 black
 fasttext
+gunicorn
+flask
