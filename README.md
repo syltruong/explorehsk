@@ -1,8 +1,21 @@
-# my-python-project
-Template repository for python-based projects:
-- Container-based development ([VSCode Remote Container extension](https://code.visualstudio.com/docs/remote/containers) can be used)
-- `Makefile` for build and run recipes
-- Python depedency management with vanilla `pip` and `requirements.txt` file
+# 单词 explorer
 
-## Basic make recipes
-- `make install-depedencies` : write unpinned or pinned dependencies in `bootstrap.req.txt` and pin all library versions in `requirements.txt`
+## Presentation
+
+Chinese word visualization tool: the goal is to make vocabulary review easier for Mandarin language learners via grouping according to:
+- semantic similarity
+- character usage
+- character radicals (to do)
+- pronunciation (to do)
+
+This is a use-case for the [tensorflow projector](projector.tensorflow.org) and [fasttext embeddings](fasttext.cc).
+
+## Todo
+- [ ] Custom vocabulary list
+- [ ] Radical decomposition
+- [ ] Pinyin mapping
+
+## References
+
+- Standalone tensorflow projector - https://github.com/tensorflow/embedding-projector-standalone/
+- HSK word data - https://github.com/Lemmih/lesschobo/tree/master/data
