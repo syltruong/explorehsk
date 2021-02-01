@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 
 from src.init import load_words
 from src.model import Model
@@ -9,4 +9,8 @@ model = Model(load_words())
 
 @app.route("/")
 def hello_world():
-    return "Hello, World" + model.ping()
+    return jsonify(model.random())
+
+@app.route("/other")
+def other():
+    return jsonify(model.get_similar("学习"))
