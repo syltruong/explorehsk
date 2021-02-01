@@ -11,3 +11,4 @@ black
 fasttext
 gunicorn
 flask
+sklearn
