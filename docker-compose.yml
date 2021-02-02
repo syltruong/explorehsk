@@ -1,11 +1,15 @@
+version: '3'
 services:
-    frontend:
+    web:
         build: ./frontend
-
-
+        ports:
+            - "80:80"
+        depends_on:
+            - backend
 
     backend:
-        build: ./backend
-        target: basic
+        build: 
+            context: ./backend
+            target: basic
         environment: 
             - PYTHONUNBUFFERED=1

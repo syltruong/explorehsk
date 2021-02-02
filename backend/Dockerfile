@@ -1,4 +1,4 @@
-FROM python:3.9.1 AS python-basic
+FROM python:3.9.1 AS basic
 
 RUN apt-get update
 
@@ -13,6 +13,8 @@ COPY data/ /app/data
 COPY app.py /app
 ENV PYTHONPATH "${PYTHONPATH}:/app"
 
+## Extra steps to install the `zh` fasttext model
+## for model building and dumping
 FROM python-basic AS builder
 
 # hack to optionally copy the fasttext bin file

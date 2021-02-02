@@ -8,7 +8,22 @@ Chinese word visualization tool: the goal is to make vocabulary review easier fo
 - character radicals (to do)
 - pronunciation (to do)
 
-This is a use-case for the [tensorflow projector](projector.tensorflow.org) and [fasttext embeddings](fasttext.cc).
+## To build
+
+### 1. Build the model
+```bash
+cd backend && make build-model
+```
+
+### 2. Build the app
+```bash
+docker-compose build
+```
+
+### 2. Deploy frontend and backend
+```bash
+docker-compose up
+```
 
 ## Todo
 - [ ] Custom vocabulary list
@@ -17,5 +32,4 @@ This is a use-case for the [tensorflow projector](projector.tensorflow.org) and 
 
 ## References
 
-- Standalone tensorflow projector - https://github.com/tensorflow/embedding-projector-standalone/
 - HSK word data - https://github.com/Lemmih/lesschobo/tree/master/data
