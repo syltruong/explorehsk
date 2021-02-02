@@ -2,11 +2,11 @@ FROM python:3.9.1 AS python-basic
 
 RUN apt-get update
 
-COPY requirements.dev.txt .
+COPY requirements.txt .
 
 RUN python -m pip install --upgrade pip
-RUN pip install -r requirements.dev.txt
-RUN pip freeze > requirements.dev.txt
+RUN pip install -r requirements.txt
+RUN pip freeze > requirements.txt
 
 COPY src/ /app/src
 COPY data/ /app/data
