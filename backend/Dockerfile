@@ -6,7 +6,6 @@ COPY requirements.txt .
 
 RUN python -m pip install --upgrade pip
 RUN pip install -r requirements.txt
-RUN pip freeze > requirements.txt
 
 COPY src/ /app/src
 COPY data/ /app/data
@@ -16,6 +15,9 @@ ENV PYTHONPATH "${PYTHONPATH}:/app"
 ## Extra steps to install the `zh` fasttext model
 ## for model building and dumping
 FROM python-basic AS builder
+
+COPY requirements.dev.txt .
+RUN pip install -r requirements.dev.txt
 
 # hack to optionally copy the fasttext bin file
 # and skip the following download step
