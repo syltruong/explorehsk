@@ -7,7 +7,7 @@ DOCKER_IMAGE_NAME = danci-explorer
 install-dependencies:
 	cp bootstrap.req.txt requirements.txt
 	docker build --target basic -t $(DOCKER_IMAGE_NAME):basic .
-	docker run --rm $(DOCKER_IMAGE_NAME) cat requirements.txt > requirements.txt
+	docker run --rm $(DOCKER_IMAGE_NAME):basic cat requirements.txt > requirements.txt
 
 # this step needs to be ran before serving the backend flask API
 # it dumps `data/model.pkl`
