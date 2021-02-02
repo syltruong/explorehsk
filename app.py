@@ -4,6 +4,7 @@ from src.init import load_words
 from src.model import Model
 
 app = Flask(__name__)
+app.config['JSON_AS_ASCII'] = False
 
 model = Model(load_words())
 
