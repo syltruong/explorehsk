@@ -1,0 +1,46 @@
+html, body {
+    height: 100%;
+}
+
+body{
+    background-color: white;
+    margin: 0;
+    border: 1px red solid;
+}
+
+.mainContainer {
+    height: 80%;
+    font-size: 150px;
+    display: flex;
+    border: red solid 1px
+}
+
+.main {
+    min-width: 50%;
+    font-size: 100%;
+    text-align: center;
+    border: red solid 1px;
+    margin: auto 0;
+}
+
+.suggestionContainer {
+    margin: auto;
+}
+
+.suggestion {
+    min-width: 50%;
+    text-align: center;
+    font-size: 30%;
+    border: red solid 1px;
+}
+
+.main__pinyin, .main__translation {
+    font-size: 20%;
+}
+
+.suggestion__pinyin, .suggestion__translation {
+    font-size: 40%;
+}
+
+
+
