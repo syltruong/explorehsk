@@ -17,8 +17,8 @@ FROM python-basic AS builder
 
 # hack to optionally copy the fasttext bin file
 # and skip the following download step
-# .gitignore is needed so that cc.zh.300.bin is optional 
-COPY .gitignore cc.zh.300.bin* /
+# put `cc.zh.300.bin` to skip the next step
+COPY data/* /
 
 # install zh language, results in 13Gb size image
 # this creates a file `/cc.zh.300.bin`

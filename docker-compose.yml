@@ -1,0 +1,11 @@
+services:
+    frontend:
+        build: ./frontend
+
+
+
+    backend:
+        build: ./backend
+        target: basic
+        environment: 
+            - PYTHONUNBUFFERED=1
