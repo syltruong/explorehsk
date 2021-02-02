@@ -1,3 +1,4 @@
+from pathlib import Path
 import pickle
 
 from src.model import Model
@@ -6,7 +7,9 @@ from flask import Flask, jsonify
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
 
-with open("data/model.pkl", "rb") as f:
+root_path = Path(__file__).parent.absolute()
+
+with open(root_path / "data" / "model.pkl", "rb") as f:
     model = pickle.load(f)
 
 @app.route("/")
