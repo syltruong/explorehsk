@@ -1,12 +1,13 @@
-from flask import Flask, jsonify
+import pickle
 
-from src.init import load_words
 from src.model import Model
+from flask import Flask, jsonify
 
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
 
-model = Model(load_words())
+with open("data/model.pkl", "rb") as f:
+    model = pickle.load(f)
 
 @app.route("/")
 def hello_world():

@@ -9,12 +9,15 @@ install-dependencies:
 	docker build --target python-basic -t $(DOCKER_IMAGE_NAME) .
 	docker run --rm $(DOCKER_IMAGE_NAME) cat requirements.txt > requirements.txt
 
-.PHONY: simple-serve
-simple-serve:
-	docker build --target python-basic -t $(DOCKER_IMAGE_NAME) .
-	docker run -p 8000:8000 --rm $(DOCKER_IMAGE_NAME) bash -c "cd app/ && python -m http.server"
+# this step needs to be ran before serving the backend flask API
+# it dumps `data/model.pkl`
+.PHONY: build-model
+build-model:
+	docker build --target builder -t $(DOCKER_IMAGE_NAME):full .
+	docker run -v $(shell pwd)/data:/data --rm $(DOCKER_IMAGE_NAME):full bash -c "python -m src.build_model /data"
 
+# this step is to run the backend server
 .PHONY: run
 run:
-	docker build --target builder -t $(DOCKER_IMAGE_NAME):full .
-	docker run -p 5000:5000 --rm $(DOCKER_IMAGE_NAME):full bash -c "cd app/ && flask run --host=0.0.0.0"
+	docker build --target python-basic -t $(DOCKER_IMAGE_NAME):basic .
+	docker run -p 5000:5000 --rm $(DOCKER_IMAGE_NAME):basic bash -c "cd app/ && flask run --host=0.0.0.0"

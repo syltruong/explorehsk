@@ -4,3 +4,4 @@
 *.bytes
 *.tsv
 cc.zh.300.bin*
+data/model.pkl
