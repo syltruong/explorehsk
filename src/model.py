@@ -20,10 +20,10 @@ class Model(object):
         """
 
         logger.debug("Load model")
-        self.ft = get_ft_model()
+        ft = get_ft_model()
 
         logger.debug("Get embeddings")
-        self.embeddings = get_embeddings(self.ft, words_df["Word"])
+        self.embeddings = get_embeddings(ft, words_df["Word"])
 
         self.words_df = words_df
         self.word_to_idx = {word: idx for idx, word in enumerate(words_df["Word"])}
