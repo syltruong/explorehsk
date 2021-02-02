@@ -6,11 +6,9 @@ import pandas as pd
 from loguru import logger
 from sklearn.metrics.pairwise import cosine_similarity
 
-from src.init import get_embeddings, get_ft_model
-
 
 class Model(object):
-    def __init__(self, words_df: pd.DataFrame):
+    def __init__(self, words_df: pd.DataFrame, embeddings: np.array):
         """
 
         Parameters
@@ -18,12 +16,8 @@ class Model(object):
         words_df : pd.DataFrame
             the expected columns as 'Word', 'Pronunciation', 'Definition'
         """
-
-        logger.debug("Load model")
-        ft = get_ft_model()
-
-        logger.debug("Get embeddings")
-        self.embeddings = get_embeddings(ft, words_df["Word"])
+        
+        self.embeddings = embeddings
 
         self.words_df = words_df
         self.word_to_idx = {word: idx for idx, word in enumerate(words_df["Word"])}

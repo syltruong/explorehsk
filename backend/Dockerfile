@@ -14,7 +14,7 @@ ENV PYTHONPATH "${PYTHONPATH}:/app"
 
 ## Extra steps to install the `zh` fasttext model
 ## for model building and dumping
-FROM python-basic AS builder
+FROM basic AS builder
 
 COPY requirements.dev.txt .
 RUN pip install -r requirements.dev.txt
@@ -22,7 +22,7 @@ RUN pip install -r requirements.dev.txt
 # hack to optionally copy the fasttext bin file
 # and skip the following download step
 # put `cc.zh.300.bin` to skip the next step
-COPY data/* /
+COPY Dockerfile cc.zh.300.bin* /
 
 # install zh language, results in 13Gb size image
 # this creates a file `/cc.zh.300.bin`
