@@ -1,11 +1,15 @@
 version: "3.9"
 services:
     web:
-        build: ./frontend
+        build:
+            context: ./frontend
+            args:
+                - EXTERNAL_IP=${EXTERNAL_IP}
         ports:
             - "80:80"
         depends_on:
             - backend
+            
 
     backend:
         build: 
