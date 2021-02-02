@@ -1,15 +1,12 @@
 SHELL := /bin/bash
 
-DOCKER_IMAGE_NAME = my-docker-image
+EXTERNAL_IP = $(shell hostname -I | awk '{print $$1}')
 
-# install dependencies
-.PHONY: install-dependencies
-install-dependencies:
-	cp bootstrap.req.txt requirements.dev.txt
-	docker build --target python-basic -t $(DOCKER_IMAGE_NAME) .
-	docker run --rm $(DOCKER_IMAGE_NAME) cat requirements.dev.txt > requirements.dev.txt
+.PHONY: build
+build:
+    echo $(EXTERNAL_IP) && export EXTERNAL_IP=$(EXTERNAL_IP) && docker-compose build
 
-.PHONY: simple-serve
-simple-serve:
-	docker build --target python-basic -t $(DOCKER_IMAGE_NAME) .
-	docker run -p 8000:8000 --rm $(DOCKER_IMAGE_NAME) bash -c "cd app/ && python -m http.server"
+# use d flag for background task
+.PHONY: deploy
+deploy:	
+	docker-compose up -d

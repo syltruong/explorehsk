@@ -40,7 +40,6 @@ def get_embeddings(
 
 
 def get_char_to_words_map(words_list: List[str]):
-
     char_to_words = defaultdict(list)
 
     for word in words_list:
@@ -56,6 +55,11 @@ def get_char_embeddings(ft_model, char_to_words):
         for char, words in char_to_words.items()
     }
     return char_embeddings
+
+
+def load_words() -> pd.DataFrame:
+    df = pd.read_csv(PATH_TO_HSK_CSV)[["Word", "Pronunciation", "Definition"]]
+    return df
 
 
 def main():
