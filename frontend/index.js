@@ -1,5 +1,13 @@
 // Display suggestions
 
+function forceWrap(word) {
+    if (word.length > 3) {
+        return word.slice(0,2) + "</br>" + word.slice(2,)
+    } else {
+        return word
+    }
+}
+
 function toggleMeta(elt) {  
     elt.querySelector(".meta").classList.toggle("hidden")
 }
@@ -56,7 +64,7 @@ overlayDiv.addEventListener("click", toggleOverlay)
 //// Random
 
 const randomBtn = document.getElementById("randomBtn")
-const baseUrl = "http://0.0.0.0:5000/" 
+const baseUrl = "http://167.99.75.225:5000/" 
 
 randomBtn.addEventListener("click", () => {
     console.log("click")
@@ -79,7 +87,7 @@ async function getRandomWord() {
 
 function populateCenter(source) {
     centerDiv = document.getElementById("center")
-    centerDiv.querySelector(".center__word").innerText = source["Word"]
+    centerDiv.querySelector(".center__word").innerHTML = forceWrap(source["Word"])
     centerDiv.querySelector(".pinyin").innerText = source["Pronunciation"]
     centerDiv.querySelector(".translation").innerText = source["Definition"]
 }
@@ -131,4 +139,6 @@ function populateSuggestions(mostSimilar) {
     makeSuggestionsClickable()
 }
 
-getRandomWord()
+// getRandomWord()
+makeSuggestionsHoverable()
+makeSuggestionsClickable()
