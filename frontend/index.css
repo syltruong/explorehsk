@@ -109,14 +109,8 @@ main {
 .suggestion .meta {
     font-size: 15%;
     /* set to none when not hovered */
-    display: none; 
     max-width: 50%;
     text-align: right;
-}
-
-.show {
-    display: block;
-    transition: visibility 0s, opacity 0.5s linear;
 }
 
 .pinyin {
@@ -124,7 +118,7 @@ main {
 }
 
 
-.overlay{
+#overlay{
     background-color:rgba(0, 0, 0, 0.838);
     position: fixed;
     width: 100%;
@@ -132,13 +126,15 @@ main {
     top: 0px;
     left: 0px;
     z-index: 1000;
-    display: block;
     padding-top: 50px;
-    display: none;
 }
 
 .prompt {
     text-align: center;
     color: white;
     font-size: xx-large;
+}
+
+.hidden {
+    display: none
 }
