@@ -1,46 +1,49 @@
-html, body {
+html {
     height: 100%;
 }
 
 body{
-    background-color: white;
+    background-color: #E0F5EA;
+    margin: 200px 300px;
+    font-family: 'Noto Sans SC', sans-serif;
+}
+
+.title{
+    color: #FFA1A1;
+    border: red 1px solid;
+    font-size: 100px;
+}
+
+h1 {
     margin: 0;
-    border: 1px red solid;
 }
 
-.mainContainer {
-    height: 80%;
-    font-size: 150px;
-    display: flex;
-    border: red solid 1px
+.zh {
+    font-family: 'Noto Sans SC', sans-serif;
 }
 
-.main {
-    min-width: 50%;
-    font-size: 100%;
-    text-align: center;
-    border: red solid 1px;
-    margin: auto 0;
+.en {
+    font-family: 'Fira Code', monospace;
 }
 
-.suggestionContainer {
-    margin: auto;
-}
-
-.suggestion {
-    min-width: 50%;
-    text-align: center;
+.subtitle.en {
+    font-weight: 500;
     font-size: 30%;
-    border: red solid 1px;
 }
 
-.main__pinyin, .main__translation {
-    font-size: 20%;
+header{
+    display: flex;
+    justify-content: space-between;
+    border: 1px blue solid;
 }
 
-.suggestion__pinyin, .suggestion__translation {
-    font-size: 40%;
+.cmd-container {
+    color: #FFA1A1;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
 }
 
-
-
+.cmd {
+    margin: 0 20px;
+}

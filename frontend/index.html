@@ -3,16 +3,35 @@
     <head>
         <title>Chinese word explorer</title>
         <link href="index.css" rel="stylesheet"/>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;700&family=Noto+Sans+SC:wght@500;700&display=swap" rel="stylesheet">
     </head>
     <body>
-        <header></header>
-        <div class="mainContainer">
-            <div class="main">
-                <div class="main__word">复习</div>
-                <div class="main__pinyin">fu4 xi2</div>
-                <div class="main__translation">to review</div>
+        <header>
+            <div class="title">
+                <div class="subtitle zh">
+                    词语接龙
+                </div>
+                <div class="subtitle en">
+                    [explore hsk]
+                </div>
             </div>
-            <div class="suggestionContainer">
+            <div class="cmd-container en">
+                <div class="cmd">search</div>
+                <div class="cmd">about</div>
+                <div class="cmd">settings</div>
+                <div class="cmd"><img src="assets/github.svg" alt="github octocat"/></div>
+            </div>
+        </header>
+        <main>
+            <button id="randomBtn">New random word</button>
+            <div class="center">
+                <div class="center__word">学习</div>
+                <div class="center__pinyin">xue2 xi2</div>
+                <div class="center__translation">to study</div>
+            </div>
+            <div class="suggestion-container">
                 <div class="suggestion">
                     <div class="suggestion__word">复习</div>
                     <div class="suggestion__pinyin">fu4 xi2</div>
@@ -29,8 +48,7 @@
                     <div class="suggestion__translation">to review</div>
                 </div>                
             </div>
-        </div>
-        <button id="randomBtn">New random word</button>
+        </main>
     </body>
     <script src="index.js"></script>
 </html>
