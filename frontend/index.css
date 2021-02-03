@@ -66,6 +66,13 @@ main {
 
 .center {
     font-size: 300px;
+    max-width: 60%;
+}
+
+.center .meta {
+    font-size: 5%;
+    margin-right: 20px;
+    border: blue 1px solid;
 }
 
 .suggestion-container{
@@ -84,20 +91,14 @@ main {
 .suggestion {
     display: flex;
     align-items: center;
-    justify-content: space-around;
-    margin: 10px auto;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    margin-left: auto;
+    width: fit-content;
 }
 
 .suggestion:hover {
     cursor: pointer;
-}
-
-.center {
-    max-width: 60%;
-}
-
-.center .meta {
-    font-size: 5%;
 }
 
 .suggestion .meta {
