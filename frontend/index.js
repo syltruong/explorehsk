@@ -56,7 +56,7 @@ overlayDiv.addEventListener("click", toggleOverlay)
 //// Random
 
 const randomBtn = document.getElementById("randomBtn")
-const baseUrl = "http://167.99.75.225:5000/" 
+const baseUrl = "http://0.0.0.0:5000/" 
 
 randomBtn.addEventListener("click", () => {
     console.log("click")
