@@ -4,8 +4,7 @@ html {
 
 body{
     background-color: #E0F5EA;
-    /* make top margin evolve according to width */
-    margin: 200px auto; 
+    margin: 5% auto; 
     max-width: 1400px;
     font-family: 'Noto Sans SC', sans-serif;
 }
@@ -49,11 +48,15 @@ header{
     margin: 0 20px;
 }
 
+.cmd:hover {
+    cursor: pointer;
+}
+
 main {
     /* see whether I want to change that to grid */
     /* in order to freeze the width of the center word cell */
     display: flex;
-    justify-content:space-around;
+    justify-content:space-between;
     align-items: center;
     flex-wrap: wrap;
     color: #32D6B8;
@@ -66,7 +69,9 @@ main {
 }
 
 .suggestion-container{
+    font-size: 100px;
     max-height: 600px;
+    width: 40%;
     overflow: scroll;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
@@ -77,28 +82,35 @@ main {
 }
 
 .suggestion {
-    font-size: 100px;
     display: flex;
     align-items: center;
     justify-content: space-around;
-    border: 1px red solid;
     margin: 10px auto;
 }
 
-.meta {
-    border: blue 1px solid
+.suggestion:hover {
+    cursor: pointer;
+}
+
+.center {
+    max-width: 60%;
 }
 
 .center .meta {
-    font-size: 10%;
-    display: flex;
-    justify-content: space-around;
+    font-size: 5%;
 }
 
 .suggestion .meta {
-    font-size: 20%;
+    font-size: 15%;
     /* set to none when not hovered */
     display: none; 
+    max-width: 50%;
+    text-align: right;
+}
+
+.show {
+    display: block;
+    transition: visibility 0s, opacity 0.5s linear;
 }
 
 .pinyin {
