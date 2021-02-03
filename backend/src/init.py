@@ -18,6 +18,9 @@ def get_ft_model():
 def get_embeddings(
     ft_model, words_list: List[str], etymologic: bool = False
 ) -> np.ndarray:
+
+    logger.debug(f"Use etymologic: {etymologic}")
+
     out_embeddings = np.zeros(
         (len(words_list), ft_model.get_dimension()), dtype=np.float32
     )
@@ -58,7 +61,14 @@ def get_char_embeddings(ft_model, char_to_words):
 
 
 def load_words() -> pd.DataFrame:
-    df = pd.read_csv(PATH_TO_HSK_CSV)[["Word", "Pronunciation", "Definition"]]
+    df = pd.read_csv(PATH_TO_HSK_CSV)
+    
+    columns = ["Word", "Pronunciation", "Definition"]
+    if "HSK Level" in df.columns:
+        columns.append("HSK Level")
+
+    df = df[columns]
+    
     return df
 
 

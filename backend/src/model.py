@@ -1,5 +1,6 @@
+from collections import defaultdict
 import random
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
 import numpy as np
 import pandas as pd
@@ -19,8 +20,15 @@ class Model(object):
         
         self.embeddings = embeddings
 
-        self.words_df = words_df
+        # so that fields are in native Python type
+        self.words_df = words_df.astype(object)
         self.word_to_idx = {word: idx for idx, word in enumerate(words_df["Word"])}
+
+        logger.debug("Get HSK index lists")
+        self.hsk_to_idx = defaultdict(list)
+        for idx, hsk_level in enumerate(words_df["HSK Level"]):
+            for l in range(1, hsk_level+1):
+                self.hsk_to_idx[l].append(idx)
 
         logger.debug("Get distances")
         distances = cosine_similarity(self.embeddings, self.embeddings)
@@ -45,15 +53,26 @@ class Model(object):
 
         return self.get_similar_from_idx(word_idx, top=top)
 
-    def get_similar_from_idx(self, word_idx: int, top: int = 10) -> Dict[str, Any]:
+    def get_similar_from_idx(self, word_idx: int, top: int = 10, hsk_level: Optional[int] = None) -> Dict[str, Any]:
 
-        indices = self.sorted_idx[word_idx, :top]
-        distances = self.sorted_distances[word_idx, :top]
+        indices = self.sorted_idx[word_idx, :]
+        distances = self.sorted_distances[word_idx, :]
+
+        # level filtering
+        if hsk_level:
+            mask = np.isin(indices, self.hsk_to_idx[hsk_level])
+            indices = indices[mask]
+            distances = distances[mask]
+
+        # top filtering
+        indices =  indices[:top]
+        distances =  distances[:top]
 
         target_words = []
         for idx, distance in zip(indices, distances):
+            word_attributes = self.words_df.iloc[idx].to_dict() 
             target_words.append(
-                {**self.words_df.iloc[idx].to_dict(), "distance": float(distance)}
+                {**word_attributes, "distance": float(distance)}
             )
 
         response = {

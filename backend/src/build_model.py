@@ -22,7 +22,7 @@ if __name__ == "__main__":
 
     ft = get_ft_model()
     logger.debug("Get embeddings")
-    embeddings = get_embeddings(ft, words_df["Word"])    
+    embeddings = get_embeddings(ft, words_df["Word"], etymologic=True)    
 
     model = Model(words_df, embeddings)
     output_path = output_dir / "model.pkl"
