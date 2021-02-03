@@ -8,8 +8,8 @@ function makeSuggestionsHoverable() {
     const suggestions = document.getElementsByClassName("suggestion")
     
     Array.from(suggestions).forEach(elt => {
-        elt.addEventListener("mouseenter", () => toggleMeta(elt))
-        elt.addEventListener("mouseleave", () => toggleMeta(elt))
+        elt.querySelector(".suggestion__word").addEventListener("mouseenter", () => toggleMeta(elt))
+        elt.querySelector(".suggestion__word").addEventListener("mouseleave", () => toggleMeta(elt))
     });
 }
 
@@ -33,7 +33,7 @@ overlayDiv.addEventListener("click", toggleOverlay)
 //// Random
 
 const randomBtn = document.getElementById("randomBtn")
-const baseUrl = "http://0.0.0.0:5000/" 
+const baseUrl = "http://167.99.75.225:5000/" 
 
 randomBtn.addEventListener("click", () => {
     console.log("click")
@@ -103,6 +103,7 @@ function populateSuggestions(mostSimilar) {
         suggestionContainerDiv.appendChild(suggestionDiv)
 
     }
+
     makeSuggestionsHoverable()
 }
 
