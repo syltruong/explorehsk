@@ -1,8 +1,9 @@
 from pathlib import Path
 import pickle
 
+from loguru import logger
 from src.model import Model
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -22,6 +23,15 @@ def ping():
 def random():
     return jsonify(model.random())
 
-@app.route("/search")
-def search():
-    return jsonify(model.get_similar("学习"))
+@app.route("/query")
+def query():
+    word = request.args.get('word')
+
+    if word is not None:
+        try:
+            most_similar = model.get_similar(word)
+            return jsonify(most_similar)
+        except ValueError:
+            return f'word {word} does not exist in vocab', 400 
+    else:
+        return 'Must provide argument `word`', 400
