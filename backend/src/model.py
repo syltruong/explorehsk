@@ -1,3 +1,4 @@
+from collections import defaultdict
 import random
 from typing import Any, Dict
 
@@ -21,6 +22,12 @@ class Model(object):
 
         self.words_df = words_df
         self.word_to_idx = {word: idx for idx, word in enumerate(words_df["Word"])}
+
+        logger.debug("Get HSK index lists")
+        self.hsk_to_idx = defaultdict(list)
+        for idx, hsk_level in enumerate(words_df["HSK Level"]):
+            for l in range(1, hsk_level+1):
+                self.hsk_to_idx[l].append(idx)
 
         logger.debug("Get distances")
         distances = cosine_similarity(self.embeddings, self.embeddings)
