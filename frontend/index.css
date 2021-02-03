@@ -71,12 +71,12 @@ main {
 }
 
 .center {
-    font-size: 300px;
+    font-size: 260px;
     max-width: 60%;
 }
 
 .center .meta {
-    font-size: 5%;
+    font-size: 7%;
     margin-right: 20px;
 }
 
@@ -106,13 +106,15 @@ main {
 
 .suggestion .meta {
     font-size: 15%;
-    /* set to none when not hovered */
-    max-width: 50%;
     text-align: left;
+    margin-right: 30px;
 }
 
 .suggestion__word {
     margin-left: auto;
+    border: red 1px solid;
+    text-align: right;
+    white-space: nowrap;
 }
 
 .pinyin {
