@@ -1,6 +1,6 @@
 from collections import defaultdict
 import random
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
 import numpy as np
 import pandas as pd
@@ -52,10 +52,20 @@ class Model(object):
 
         return self.get_similar_from_idx(word_idx, top=top)
 
-    def get_similar_from_idx(self, word_idx: int, top: int = 10) -> Dict[str, Any]:
+    def get_similar_from_idx(self, word_idx: int, top: int = 10, hsk_level: Optional[int] = None) -> Dict[str, Any]:
 
-        indices = self.sorted_idx[word_idx, :top]
-        distances = self.sorted_distances[word_idx, :top]
+        indices = self.sorted_idx[word_idx, :]
+        distances = self.sorted_distances[word_idx, :]
+
+        # level filtering
+        if hsk_level:
+            mask = np.isin(indices, self.hsk_to_idx[hsk_level])
+            indices = indices[mask]
+            distances = distances[mask]
+
+        # top filtering
+        indices =  indices[:top]
+        distances =  distances[:top]
 
         target_words = []
         for idx, distance in zip(indices, distances):
