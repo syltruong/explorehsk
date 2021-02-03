@@ -13,6 +13,29 @@ function makeSuggestionsHoverable() {
     });
 }
 
+function makeSuggestionsClickable() {
+    const suggestionWords = document.getElementsByClassName("suggestion__word")
+
+    Array.from(suggestionWords).forEach(elt => {
+        const word = elt.innerText;
+        elt.addEventListener("click", () => populateFrom(word))
+    });    
+}
+
+async function populateFrom(word) {
+    try {
+        const response = await fetch(baseUrl + "query?word=" + word);
+        const jsonData = await response.json();
+
+        console.log(jsonData)
+        populateCenter(jsonData.source)
+        populateSuggestions(jsonData.most_similar)
+
+    } catch(err) {
+        console.log(err)
+    }
+}
+
 
 // Command handling
 
@@ -105,6 +128,7 @@ function populateSuggestions(mostSimilar) {
     }
 
     makeSuggestionsHoverable()
+    makeSuggestionsClickable()
 }
 
 getRandomWord()
