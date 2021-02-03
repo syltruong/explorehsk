@@ -4,9 +4,11 @@ html {
 
 body{
     background-color: #E0F5EA;
-    margin: 5% auto; 
+    margin: 3% auto; 
     max-width: 1400px;
     font-family: 'Noto Sans SC', sans-serif;
+    padding-left: 50px;
+    padding-right: 50px;
 }
 
 .title{
