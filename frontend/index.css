@@ -4,14 +4,17 @@ html {
 
 body{
     background-color: #E0F5EA;
-    margin: 200px 300px;
+    /* make top margin evolve according to width */
+    margin: 200px auto; 
+    max-width: 1400px;
     font-family: 'Noto Sans SC', sans-serif;
+    border: red 1px solid;
 }
 
 .title{
     color: #FFA1A1;
     border: red 1px solid;
-    font-size: 100px;
+    font-size: 70px;
 }
 
 h1 {
@@ -35,6 +38,7 @@ header{
     display: flex;
     justify-content: space-between;
     border: 1px blue solid;
+    flex-wrap: wrap;
 }
 
 .cmd-container {
@@ -47,3 +51,54 @@ header{
 .cmd {
     margin: 0 20px;
 }
+
+main {
+    /* see whether I want to change that to grid */
+    /* in order to freeze the width of the center word cell */
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    color: #32D6B8;
+    /* make top margin evolve according to width */
+    margin-top: 10px;
+}
+
+.center {
+    font-size: 300px;
+}
+
+.suggestion-container{
+    max-height: 600px;
+    overflow: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.suggestion-container::-webkit-scrollbar {
+    display: none;
+}
+
+.suggestion {
+    font-size: 100px;
+    display: flex;
+    align-items: center;
+}
+
+.center .meta {
+    font-size: 10%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.suggestion .meta {
+    font-size: 20%;
+    /* set to none when not hovered */
+    display: block; 
+}
+
+.pinyin {
+    font-weight: 700;
+}
+
+
