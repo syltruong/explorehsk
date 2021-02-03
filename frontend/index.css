@@ -8,12 +8,10 @@ body{
     margin: 200px auto; 
     max-width: 1400px;
     font-family: 'Noto Sans SC', sans-serif;
-    border: red 1px solid;
 }
 
 .title{
     color: #FFA1A1;
-    border: red 1px solid;
     font-size: 70px;
 }
 
@@ -37,7 +35,6 @@ h1 {
 header{
     display: flex;
     justify-content: space-between;
-    border: 1px blue solid;
     flex-wrap: wrap;
 }
 
@@ -83,6 +80,13 @@ main {
     font-size: 100px;
     display: flex;
     align-items: center;
+    justify-content: space-around;
+    border: 1px red solid;
+    margin: 10px auto;
+}
+
+.meta {
+    border: blue 1px solid
 }
 
 .center .meta {
@@ -94,7 +98,7 @@ main {
 .suggestion .meta {
     font-size: 20%;
     /* set to none when not hovered */
-    display: block; 
+    display: none; 
 }
 
 .pinyin {

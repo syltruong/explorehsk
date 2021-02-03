@@ -17,3 +17,22 @@ async function getRandomWord() {
         console.log(err)
     }
 }
+
+function revealMeta(element) {
+    element.querySelector(".meta").style.display = "block"
+}
+
+function hideMeta(element) {
+    element.querySelector(".meta").style.display = "none"
+}
+
+const suggestions = document.getElementsByClassName("suggestion")
+
+Array.from(suggestions).forEach((element, index) => {
+    element.addEventListener("mouseenter", () => {
+        revealMeta(element);
+    })
+    element.addEventListener("mouseleave", () => {
+        hideMeta(element);
+    })
+});
