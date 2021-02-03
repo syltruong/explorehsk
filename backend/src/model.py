@@ -20,7 +20,8 @@ class Model(object):
         
         self.embeddings = embeddings
 
-        self.words_df = words_df
+        # so that fields are in native Python type
+        self.words_df = words_df.astype(object)
         self.word_to_idx = {word: idx for idx, word in enumerate(words_df["Word"])}
 
         logger.debug("Get HSK index lists")
@@ -69,8 +70,9 @@ class Model(object):
 
         target_words = []
         for idx, distance in zip(indices, distances):
+            word_attributes = self.words_df.iloc[idx].to_dict() 
             target_words.append(
-                {**self.words_df.iloc[idx].to_dict(), "distance": float(distance)}
+                {**word_attributes, "distance": float(distance)}
             )
 
         response = {
