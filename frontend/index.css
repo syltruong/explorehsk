@@ -52,6 +52,7 @@ header{
 
 .cmd {
     margin: 0 20px;
+    -webkit-user-select: none;
 }
 
 .cmd:hover {
@@ -112,9 +113,9 @@ main {
 
 .suggestion__word {
     margin-left: auto;
-    border: red 1px solid;
     text-align: right;
     white-space: nowrap;
+    -webkit-user-select: none;
 }
 
 .pinyin {
