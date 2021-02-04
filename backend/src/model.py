@@ -42,20 +42,20 @@ class Model(object):
     def ping(self):
         return f"I am alive with {len(self.word_to_idx)} words."
 
-    def random(self, top: int = 10) -> Dict[str, Any]:
+    def random(self, top: int = 10, hsk_level: Optional[int] = None) -> Dict[str, Any]:
 
         random_idx = random.randint(0, len(self.word_to_idx) - 1)
 
-        return self.get_similar_from_idx(random_idx, top=top)
+        return self.get_similar_from_idx(random_idx, top=top, hsk_level=hsk_level)
 
-    def get_similar(self, word: str, top: int = 10) -> Dict[str, Any]:
+    def get_similar(self, word: str, top: int = 10, hsk_level: Optional[int] = None) -> Dict[str, Any]:
 
         if word not in self.word_to_idx:
             raise ValueError(f"Word not found in vocab list ({word})")
 
         word_idx = self.word_to_idx[word]
 
-        return self.get_similar_from_idx(word_idx, top=top)
+        return self.get_similar_from_idx(word_idx, top=top, hsk_level=hsk_level)
 
     def get_similar_from_idx(self, word_idx: int, top: int = 10, hsk_level: Optional[int] = None) -> Dict[str, Any]:
 

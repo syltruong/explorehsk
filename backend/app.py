@@ -21,15 +21,22 @@ def ping():
 
 @app.route("/random")
 def random():
-    return jsonify(model.random())
+    top = request.args.get("top", default=10, type=int)
+    hsk_level = request.args.get("hskLevel", default=None, type=int)
+
+    random_suggestions = model.random(top=top, hsk_level=hsk_level) 
+    
+    return jsonify(random_suggestions)
 
 @app.route("/query")
 def query():
     word = request.args.get('word')
+    top = request.args.get("top", default=10, type=int)
+    hsk_level = request.args.get("hskLevel", default=None, type=int)
 
     if word is not None:
         try:
-            most_similar = model.get_similar(word)
+            most_similar = model.get_similar(word=word, top=top, hsk_level=hsk_level)
             return jsonify(most_similar)
         except ValueError:
             return f'word {word} does not exist in vocab', 400 
