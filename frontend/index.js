@@ -50,16 +50,16 @@ async function populateFrom(word) {
 //// Coming soon
 
 const btns = document.getElementsByClassName("comingSoon")
-const overlayDiv = document.getElementById("overlay")
+const comingSoonOverlayDiv = document.getElementById("coming-soon-overlay")
 
 function toggleOverlay(){
-    overlayDiv.classList.toggle("hidden")        
+    comingSoonOverlayDiv.classList.toggle("hidden")        
 }
 
 Array.from(btns).forEach(elt => {
     elt.addEventListener("click", toggleOverlay)
 });
-overlayDiv.addEventListener("click", toggleOverlay)
+comingSoonOverlayDiv.addEventListener("click", toggleOverlay)
 
 //// Random
 
