@@ -1,3 +1,34 @@
+// Command handling
+
+//// Coming soon
+
+const btns = document.getElementsByClassName("comingSoon")
+const settingsBtn = document.getElementById("settingsBtn")
+const comingSoonOverlayDiv = document.getElementById("coming-soon-overlay")
+const settingsOverlayDiv = document.getElementById("settings-overlay")
+
+function toggleHidden(elt){
+    elt.classList.toggle("hidden")        
+}
+
+Array.from(btns).forEach(elt => {
+    elt.addEventListener("click", () => toggleHidden(comingSoonOverlayDiv))
+});
+settingsBtn.addEventListener("click", () => toggleHidden(settingsOverlayDiv))
+Array.from(document.getElementsByClassName("overlay")).forEach(
+    elt => elt.addEventListener("click", () => toggleHidden(elt))
+);
+
+const hskLevelSlider = document.getElementById('hsk-level-slider')
+function renderHskLevel() {
+    document.getElementById("hsk-level-span").innerText = hskLevelSlider.value
+}
+hskLevelSlider.addEventListener("click", event => {
+    event.stopPropagation();
+})
+hskLevelSlider.addEventListener("input", renderHskLevel)
+
+
 // Display suggestions
 
 function forceWrap(word) {
@@ -32,10 +63,9 @@ function makeSuggestionsClickable() {
 
 async function populateFrom(word) {
     try {
-        const response = await fetch(baseUrl + "query?word=" + word);
+        const response = await fetch(baseUrl + `query?word=${word}&hskLevel=${hskLevelSlider.value}`);
         const jsonData = await response.json();
 
-        console.log(jsonData)
         populateCenter(jsonData.source)
         populateSuggestions(jsonData.most_similar)
 
@@ -45,21 +75,7 @@ async function populateFrom(word) {
 }
 
 
-// Command handling
 
-//// Coming soon
-
-const btns = document.getElementsByClassName("comingSoon")
-const comingSoonOverlayDiv = document.getElementById("coming-soon-overlay")
-
-function toggleOverlay(){
-    comingSoonOverlayDiv.classList.toggle("hidden")        
-}
-
-Array.from(btns).forEach(elt => {
-    elt.addEventListener("click", toggleOverlay)
-});
-comingSoonOverlayDiv.addEventListener("click", toggleOverlay)
 
 //// Random
 
@@ -73,7 +89,7 @@ randomBtn.addEventListener("click", () => {
 
 async function getRandomWord() {
     try {
-        const response = await fetch(baseUrl + "random");
+        const response = await fetch(baseUrl + `random?hskLevel=${hskLevelSlider.value}`);
         const jsonData = await response.json();
 
         console.log(jsonData)
@@ -139,6 +155,7 @@ function populateSuggestions(mostSimilar) {
     makeSuggestionsClickable()
 }
 
-// getRandomWord()
+getRandomWord()
+renderHskLevel()
 makeSuggestionsHoverable()
 makeSuggestionsClickable()

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Chinese word explorer</title>
+        <title>Explore HSK - 词语接龙</title>
         <meta charset="utf-8">
         <link href="index.css" rel="stylesheet"/>
         <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -22,7 +22,7 @@
                 <div class="cmd" id="randomBtn">random</div>
                 <div class="cmd comingSoon" id="searchBtn">search</div>
                 <div class="cmd comingSoon" id="aboutBtn">about</div>
-                <div class="cmd comingSoon" id="settingsBtn">settings</div>
+                <div class="cmd" id="settingsBtn">settings</div>
                 <div class="cmd" id="github">
                     <a href="https://github.com/syltruong/danci-explorer" target="_blank">
                         <img src="assets/github.svg" alt="github octocat"/></div>
@@ -85,7 +85,18 @@
             </div>
         </main>
         <div id="coming-soon-overlay" class="hidden overlay">
-            <div class="prompt en">Coming soon</div>
+            <span class="en">Coming soon</span>
+        </div>
+        <div id="settings-overlay" class="en hidden overlay">
+            <div class="overlay-container">
+                <div class="overlay-title">Settings</div>
+                <div class="setting">
+                    <div class="setting-title">
+                        HSK Level <span id="hsk-level-span"></span>
+                    </div>
+                    <input type="range" min="1" max="6" value="4" id="hsk-level-slider">
+                </div>
+            </div>
         </div>
     </body>
     <script src="index.js"></script>
