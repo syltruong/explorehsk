@@ -25,9 +25,13 @@ class Model(object):
         self.word_to_idx = {word: idx for idx, word in enumerate(words_df["Word"])}
 
         logger.debug("Get HSK index lists")
+        # each list contains the words of that level and below
+        # ie. 4 : [all words of level 4 and below]
+        
+        max_hsk_level = words_df["HSK Level"].max()
         self.hsk_to_idx = defaultdict(list)
         for idx, hsk_level in enumerate(words_df["HSK Level"]):
-            for l in range(1, hsk_level+1):
+            for l in range(hsk_level, max_hsk_level + 1):
                 self.hsk_to_idx[l].append(idx)
 
         logger.debug("Get distances")
@@ -38,20 +42,23 @@ class Model(object):
     def ping(self):
         return f"I am alive with {len(self.word_to_idx)} words."
 
-    def random(self, top: int = 10) -> Dict[str, Any]:
+    def random(self, top: int = 10, hsk_level: Optional[int] = None) -> Dict[str, Any]:
 
-        random_idx = random.randint(0, len(self.word_to_idx) - 1)
+        if hsk_level is not None:
+            random_idx = random.choice(self.hsk_to_idx[hsk_level])
+        else:
+            random_idx = random.randint(0, len(self.word_to_idx) - 1)
 
-        return self.get_similar_from_idx(random_idx, top=top)
+        return self.get_similar_from_idx(random_idx, top=top, hsk_level=hsk_level)
 
-    def get_similar(self, word: str, top: int = 10) -> Dict[str, Any]:
+    def get_similar(self, word: str, top: int = 10, hsk_level: Optional[int] = None) -> Dict[str, Any]:
 
         if word not in self.word_to_idx:
             raise ValueError(f"Word not found in vocab list ({word})")
 
         word_idx = self.word_to_idx[word]
 
-        return self.get_similar_from_idx(word_idx, top=top)
+        return self.get_similar_from_idx(word_idx, top=top, hsk_level=hsk_level)
 
     def get_similar_from_idx(self, word_idx: int, top: int = 10, hsk_level: Optional[int] = None) -> Dict[str, Any]:
 
@@ -59,7 +66,7 @@ class Model(object):
         distances = self.sorted_distances[word_idx, :]
 
         # level filtering
-        if hsk_level:
+        if hsk_level is not None:
             mask = np.isin(indices, self.hsk_to_idx[hsk_level])
             indices = indices[mask]
             distances = distances[mask]
