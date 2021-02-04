@@ -25,9 +25,13 @@ class Model(object):
         self.word_to_idx = {word: idx for idx, word in enumerate(words_df["Word"])}
 
         logger.debug("Get HSK index lists")
+        # each list contains the words of that level and below
+        # ie. 4 : [all words of level 4 and below]
+        
+        max_hsk_level = words_df["HSK Level"].max()
         self.hsk_to_idx = defaultdict(list)
         for idx, hsk_level in enumerate(words_df["HSK Level"]):
-            for l in range(1, hsk_level+1):
+            for l in range(hsk_level, max_hsk_level + 1):
                 self.hsk_to_idx[l].append(idx)
 
         logger.debug("Get distances")
