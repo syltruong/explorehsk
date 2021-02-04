@@ -44,7 +44,10 @@ class Model(object):
 
     def random(self, top: int = 10, hsk_level: Optional[int] = None) -> Dict[str, Any]:
 
-        random_idx = random.randint(0, len(self.word_to_idx) - 1)
+        if hsk_level is not None:
+            random_idx = random.choice(self.hsk_to_idx[hsk_level])
+        else:
+            random_idx = random.randint(0, len(self.word_to_idx) - 1)
 
         return self.get_similar_from_idx(random_idx, top=top, hsk_level=hsk_level)
 
@@ -64,8 +67,6 @@ class Model(object):
 
         # level filtering
         if hsk_level is not None:
-            if hsk_level not in self.hsk_to_idx:
-                raise KeyError(f"Unrecognized HSK level {hsk_level}. Available levels: {list(self.hsk_to_idx.keys())}")
             mask = np.isin(indices, self.hsk_to_idx[hsk_level])
             indices = indices[mask]
             distances = distances[mask]
