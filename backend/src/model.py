@@ -63,7 +63,9 @@ class Model(object):
         distances = self.sorted_distances[word_idx, :]
 
         # level filtering
-        if hsk_level:
+        if hsk_level is not None:
+            if hsk_level not in self.hsk_to_idx:
+                raise KeyError(f"Unrecognized HSK level {hsk_level}. Available levels: {list(self.hsk_to_idx.keys())}")
             mask = np.isin(indices, self.hsk_to_idx[hsk_level])
             indices = indices[mask]
             distances = distances[mask]
