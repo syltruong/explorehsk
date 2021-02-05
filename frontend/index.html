@@ -8,82 +8,89 @@
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;700&family=Noto+Sans+SC:wght@500;700&display=swap" rel="stylesheet">
     </head>
-    <body>
-        <header>
-            <div class="title">
-                <div class="subtitle zh">
-                    词语接龙
+    <body class="zh">
+        <div class="landing-page">
+            <header>
+                <div class="title">
+                    <h1>
+                        词语接龙
+                    </h1>
+                    <div class="subtitle en">
+                        [explore hsk]
+                    </div>
                 </div>
-                <div class="subtitle en">
-                    [explore hsk]
+                <div class="cmd-container en">
+                    <div class="cmd" id="randomBtn">random</div>
+                    <div class="cmd comingSoon" id="searchBtn">search</div>
+                    <div class="cmd comingSoon" id="aboutBtn">about</div>
+                    <div class="cmd" id="settingsBtn">settings</div>
+                    <div class="cmd" id="github">
+                        <a href="https://github.com/syltruong/danci-explorer" target="_blank">
+                            <img src="assets/github.svg" alt="github octocat"/></div>
+                        </a>
                 </div>
-            </div>
-            <div class="cmd-container en">
-                <div class="cmd" id="randomBtn">random</div>
-                <div class="cmd comingSoon" id="searchBtn">search</div>
-                <div class="cmd comingSoon" id="aboutBtn">about</div>
-                <div class="cmd" id="settingsBtn">settings</div>
-                <div class="cmd" id="github">
-                    <a href="https://github.com/syltruong/danci-explorer" target="_blank">
-                        <img src="assets/github.svg" alt="github octocat"/></div>
-                    </a>
-            </div>
-        </header>
-        <main>
-            <div class="center" id="center">
-                <div class="zh center__word">努力</br>学习</div>
-                <div class="meta">
-                    <div class="en pinyin">xue2 xi2</div>
-                    <div class="en translation">to learn; to studyto learn; to studyto learn; to studyto learn; to studyto learn; to studyto learn; to studyto learn; to studyto learn; to study</div>
+            </header>
+            <main>
+                <div id="center">
+                    <div class="center__word">努力学习</div>
+                    <div class="meta">
+                        <div class="en pinyin">xue2 xi2</div>
+                        <div class="en translation">to learn; to studyto learn; to studyto learn; to studyto learn; to studyto learn; to studyto learn; to studyto learn; to studyto learn; to study</div>
+                    </div>
                 </div>
-            </div>
-            <div class="suggestion-container" id="suggestion-container">
+                <div id="suggestion-container">
 
-                    <div class="suggestion">
-                        <div class="meta hidden">
-                            <div class="en pinyin">fu4 xi2</div>
-                            <div class="en translation">to revise; to review; revision; CL:次[ci4]</div>
+                        <div class="suggestion">
+                            <div class="meta hidden">
+                                <div class="en pinyin">fu4 xi2</div>
+                                <div class="en translation">to revise; to review; revision; CL:次[ci4]</div>
+                            </div>
+                            <div class="suggestion__word">努力学习</div>
                         </div>
-                        <div class="zh suggestion__word">努力学习</div>
-                    </div>
-                    <div class="suggestion">
-                        <div class="meta hidden">
-                            <div class="en pinyin">fu4 xi2</div>
-                            <div class="en translation">to revise; to review; revision; CL:次[ci4]to revise; to review; revision; CL:次[ci4]to revise; to review; revision; CL:次[ci4]to revise; to review; revision; CL:次[ci4]</div>
-                        </div>
-                        <div class="zh suggestion__word">很辛苦</div>
-                    </div>
-                    <div class="suggestion">
-                        <div class="meta hidden">
-                            <div class="en pinyin">fu4 xi2</div>
-                            <div class="en translation">to revise; to review; revision; CL:次[ci4]</div>
-                        </div>
-                        <div class="zh suggestion__word">复习</div>
-                    </div>
-                    <div class="suggestion">
-                        <div class="meta hidden">
-                            <div class="en pinyin">fu4 xi2</div>
-                            <div class="en translation">to revise; to review; revision; CL:次[ci4]</div>
-                        </div>
-                        <div class="zh suggestion__word">复习</div>
-                    </div>
-                    <div class="suggestion">
-                        <div class="meta hidden">
-                            <div class="en pinyin">fu4 xi2</div>
-                            <div class="en translation">to revise; to review; revision; CL:次[ci4]</div>
-                        </div>
-                        <div class="zh suggestion__word">复习</div>
-                    </div>
-                    <div class="suggestion">
-                        <div class="meta hidden">
-                            <div class="en pinyin">fu4 xi2</div>
-                            <div class="en translation">to revise; to review; revision; CL:次[ci4]</div>
-                        </div>
-                        <div class="zh suggestion__word">复习</div>
-                    </div>
 
-            </div>
-        </main>
+                        <div class="suggestion">
+                            <div class="meta hidden">
+                                <div class="en pinyin">fu4 xi2</div>
+                                <div class="en translation">to revise; to review; revision; CL:次[ci4]to revise; to review; revision; CL:次[ci4]to revise; to review; revision; CL:次[ci4]to revise; to review; revision; CL:次[ci4]</div>
+                            </div>
+                            <div class="suggestion__word">很辛苦</div>
+                        </div>
+
+                        <div class="suggestion">
+                            <div class="meta hidden">
+                                <div class="en pinyin">fu4 xi2</div>
+                                <div class="en translation">to revise; to review; revision; CL:次[ci4]</div>
+                            </div>
+                            <div class="suggestion__word">复习</div>
+                        </div>
+
+                        <div class="suggestion">
+                            <div class="meta hidden">
+                                <div class="en pinyin">fu4 xi2</div>
+                                <div class="en translation">to revise; to review; revision; CL:次[ci4]</div>
+                            </div>
+                            <div class="suggestion__word">复习</div>
+                        </div>
+
+                        <div class="suggestion">
+                            <div class="meta hidden">
+                                <div class="en pinyin">fu4 xi2</div>
+                                <div class="en translation">to revise; to review; revision; CL:次[ci4]</div>
+                            </div>
+                            <div class="suggestion__word">复习</div>
+                        </div>
+
+                        <div class="suggestion">
+                            <div class="meta hidden">
+                                <div class="en pinyin">fu4 xi2</div>
+                                <div class="en translation">to revise; to review; revision; CL:次[ci4]</div>
+                            </div>
+                            <div class="suggestion__word">复习</div>
+                        </div>
+
+                </div>
+            </main>
+        </div>
         <div id="coming-soon-overlay" class="hidden overlay">
             <span class="en">Coming soon</span>
         </div>
