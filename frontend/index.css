@@ -9,6 +9,11 @@ body {
     margin: 0;
 }
 
+a, a:visited {
+    color: #FFA1A1;
+    text-decoration: none;
+}
+
 .landing-page{
     max-width: 1200px;
 
@@ -165,8 +170,9 @@ main {
 @media (max-width: 972px){
     main {
         flex-direction: column;
-        justify-content: space-around;
+        justify-content: space-between;
         align-items: center;
+        margin-top: 5vh;
     }
     
     #center {
@@ -202,7 +208,7 @@ main {
     }
 
     .suggestion .meta {
-        font-size: 1em;
+        font-size: 0.75em;
         text-align: center;
     }
 
@@ -251,4 +257,9 @@ main {
 
 #hsk-level-slider {
     width: 100%;
+}
+
+
+#about-overlay h2{
+    margin-top: 3em;
 }

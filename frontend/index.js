@@ -4,8 +4,10 @@
 
 const btns = document.getElementsByClassName("comingSoon")
 const settingsBtn = document.getElementById("settingsBtn")
+const aboutBtn = document.getElementById("aboutBtn")
 const comingSoonOverlayDiv = document.getElementById("coming-soon-overlay")
 const settingsOverlayDiv = document.getElementById("settings-overlay")
+const aboutOverlayDiv = document.getElementById("about-overlay")
 
 function toggleHidden(elt){
     elt.classList.toggle("hidden")        
@@ -15,6 +17,7 @@ Array.from(btns).forEach(elt => {
     elt.addEventListener("click", () => toggleHidden(comingSoonOverlayDiv))
 });
 settingsBtn.addEventListener("click", () => toggleHidden(settingsOverlayDiv))
+aboutBtn.addEventListener("click", () => toggleHidden(aboutOverlayDiv))
 Array.from(document.getElementsByClassName("overlay")).forEach(
     elt => elt.addEventListener("click", () => toggleHidden(elt))
 );
@@ -152,7 +155,7 @@ function populateSuggestions(mostSimilar) {
 function setMainHeight() {
     if (window.innerWidth < 972){
         mainElt = document.querySelector("main")
-        mainElt.style.height = `calc(100vh - ${mainElt.offsetTop}px)`
+        mainElt.style.height = `calc(85vh - ${mainElt.offsetTop}px)`
     }
 }
 
