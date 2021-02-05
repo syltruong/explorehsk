@@ -40,7 +40,7 @@ function forceWrap(word) {
 }
 
 function toggleMeta(elt) {  
-    elt.querySelector(".meta").classList.toggle("hidden")
+    elt.querySelector(".meta").classList.toggle("hidden-meta")
 }
 
 function makeSuggestionsHoverable() {
@@ -130,7 +130,7 @@ function populateSuggestions(mostSimilar) {
 
         const metaDiv = document.createElement("div")
         metaDiv.classList.add("meta") 
-        metaDiv.classList.add("hidden")
+        metaDiv.classList.add("hidden-meta")
 
         const pinyinDiv = document.createElement("div")
         pinyinDiv.classList.add("en") 

@@ -1,5 +1,5 @@
 html {
-    font-size: 120%;
+    font-size: 100%;
 }
 
 body {
@@ -56,7 +56,7 @@ header {
 
 @media (max-width: 972px){
     .landing-page{
-        padding: 2em 0
+        padding: 1em 0
     }
     
     header {
@@ -66,6 +66,11 @@ header {
     .title {
         text-align: center;
     }
+
+    .title h1 {
+        font-size: 2.5rem;
+    }
+
 
     .cmd-container {
         margin-top: 2em;
@@ -127,12 +132,20 @@ main {
     white-space: nowrap;
 }
 
+.suggestion__word:hover {
+    cursor: pointer;
+}
+
 .suggestion .meta {
     font-size: 0.75rem;
 }
 
 .pinyin {
     font-weight: bold;
+}
+
+.hidden-meta {
+    display: none
 }
 
 .hidden {
@@ -142,7 +155,7 @@ main {
 @media (max-width: 972px){
     main {
         flex-direction: column;
-        justify-content: space-evenly;
+        justify-content: space-around;
         align-items: center;
     }
     
@@ -150,7 +163,6 @@ main {
         width: 100%;
         margin-top: 0;
         text-align: center;
-        height: 50vh;
         border: blue 1px solid;
     }
 
@@ -167,14 +179,28 @@ main {
         margin: 0 1em;
     }
 
+
+    .center__word {
+        font-size: 6rem;
+        white-space: nowrap;
+    }
+
     .suggestion__word {
-        font-size: 5rem;
+        font-size: 3rem;
         text-align: center;
         white-space: nowrap;
     }
 
+    .suggestion .meta {
+        font-size: 1em;
+    }
+
     .suggestion .meta .translation {
         display: none;
+    }
+
+    .hidden-meta {
+        display: block;
     }
 
 }
