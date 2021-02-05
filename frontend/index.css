@@ -243,7 +243,7 @@ main {
     max-width: 600px;
     margin: 0 auto;
     padding: 1px;
-    margin-top: 5em;
+    margin-top: 1em;
 }
 
 .setting {
@@ -262,4 +262,10 @@ main {
 
 #about-overlay h2{
     margin-top: 3em;
+}
+
+@media (max-width: 330px), (max-height: 640px) {
+    html {
+        font-size: 85%;
+    }
 }
