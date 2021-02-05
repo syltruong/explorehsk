@@ -1,8 +1,8 @@
-# 单词 explorer
+# Explore HSK - 词语接龙
 
 ## Presentation
 
-Chinese word visualization tool: the goal is to make vocabulary review easier for Mandarin language learners via grouping according to:
+The goal is to make vocabulary review easier for Mandarin language learners via grouping according to:
 - semantic similarity
 - character usage
 - character radicals (to do)
@@ -15,9 +15,16 @@ Chinese word visualization tool: the goal is to make vocabulary review easier fo
 cd backend && make build-model
 ```
 
+This will create a `model.pkl` file in `backend/data/model.pkl`.
+It will download and load a [fasttext](fasttext.cc) language model in memory, so make sure to provision enough RAM is your Docker settings.
+
 ### 2. Build the app
 ```bash
+# if on local
 docker-compose build
+
+# if on server
+make build
 ```
 
 ### 2. Deploy frontend and backend
@@ -26,9 +33,8 @@ docker-compose up
 ```
 
 ## Todo
-- [ ] Custom vocabulary list
+- [ ] Search
 - [ ] Radical decomposition
-- [ ] Pinyin mapping
 
 ## References
 
