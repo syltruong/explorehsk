@@ -106,3 +106,36 @@ main {
 .hidden {
     display: none
 }
+
+.overlay{
+    background-color:rgba(0, 0, 0, 0.838);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    z-index: 1000;
+    padding: 2em;
+    box-sizing: border-box;
+    color: white;
+}
+
+.overlay-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1px;
+    margin-top: 5em;
+}
+
+.setting {
+    margin-top: 2em;
+}
+
+.setting-title {
+    font-size: 2rem;
+    margin-bottom: 0.5em;    
+}
+
+#hsk-level-slider {
+    width: 100%;
+}
