@@ -1,0 +1,158 @@
+html {
+    height: 100%;
+}
+
+body{
+    background-color: #E0F5EA;
+    margin: 3% auto; 
+    max-width: 1400px;
+    font-family: 'Noto Sans SC', sans-serif;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.title{
+    color: #FFA1A1;
+    font-size: 70px;
+}
+
+#github{
+    transform: translateY(3px);
+}
+
+h1 {
+    margin: 0;
+}
+
+.zh {
+    font-family: 'Noto Sans SC', sans-serif;
+}
+
+.en {
+    font-family: 'Fira Code', monospace;
+}
+
+.subtitle.en {
+    font-weight: 500;
+    font-size: 30%;
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.cmd-container {
+    color: #FFA1A1;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.cmd {
+    margin: 0 20px;
+}
+
+.cmd:hover {
+    cursor: pointer;
+}
+
+main {
+    /* see whether I want to change that to grid */
+    /* in order to freeze the width of the center word cell */
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    color: #32D6B8;
+    /* make top margin evolve according to width */
+    margin-top: 10px;
+}
+
+.center {
+    font-size: 260px;
+    max-width: 60%;
+}
+
+.center .meta {
+    font-size: 7%;
+    margin-right: 20px;
+}
+
+.suggestion-container{
+    font-size: 100px;
+    max-height: 600px;
+    width: 40%;
+    overflow: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.suggestion-container::-webkit-scrollbar {
+    display: none;
+}
+
+.suggestion {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.suggestion:hover {
+    cursor: pointer;
+}
+
+.suggestion .meta {
+    font-size: 15%;
+    text-align: left;
+    margin-right: 30px;
+}
+
+.suggestion__word {
+    margin-left: auto;
+    border: red 1px solid;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.pinyin {
+    font-weight: 700;
+}
+
+
+.overlay{
+    background-color:rgba(0, 0, 0, 0.838);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    z-index: 1000;
+    padding: 2em;
+    box-sizing: border-box;
+    color: white;
+}
+
+.hidden {
+    display: none
+}
+
+.setting {
+    margin-top: 2em;
+}
+
+.setting-title {
+    font-size: 2rem;
+    margin-bottom: 0.5em;    
+}
+
+#hsk-level-slider {
+    width: 100%;
+}
+
+.overlay-container {
+    max-width: 600px;
+    margin: 0 auto;
+}

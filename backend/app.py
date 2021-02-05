@@ -21,7 +21,7 @@ def ping():
 
 @app.route("/random")
 def random():
-    top = request.args.get("top", default=10, type=int)
+    top = request.args.get("top", default=20, type=int)
     hsk_level = request.args.get("hskLevel", default=None, type=int)
 
     random_suggestions = model.random(top=top, hsk_level=hsk_level) 
@@ -31,7 +31,7 @@ def random():
 @app.route("/query")
 def query():
     word = request.args.get('word')
-    top = request.args.get("top", default=10, type=int)
+    top = request.args.get("top", default=20, type=int)
     hsk_level = request.args.get("hskLevel", default=None, type=int)
 
     if word is not None:

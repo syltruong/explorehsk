@@ -1,27 +1,18 @@
 html {
-    height: 100%;
+    font-size: 100%;
 }
 
-body{
+body {
     background-color: #E0F5EA;
-    margin: 3% auto; 
-    max-width: 1400px;
-    font-family: 'Noto Sans SC', sans-serif;
-    padding-left: 50px;
-    padding-right: 50px;
-}
-
-.title{
-    color: #FFA1A1;
-    font-size: 70px;
-}
-
-#github{
-    transform: translateY(3px);
-}
-
-h1 {
     margin: 0;
+}
+
+.landing-page{
+    max-width: 1200px;
+
+    margin: 0 auto;
+    padding: 4em 5em;
+    padding-bottom: 0;
 }
 
 .zh {
@@ -32,95 +23,201 @@ h1 {
     font-family: 'Fira Code', monospace;
 }
 
-.subtitle.en {
-    font-weight: 500;
-    font-size: 30%;
-}
-
-header{
+header {
     display: flex;
     justify-content: space-between;
-    flex-wrap: wrap;
-}
-
-.cmd-container {
-    color: #FFA1A1;
-    font-size: 20px;
-    display: flex;
     align-items: center;
 }
 
+
+.title {
+    color: #FFA1A1;
+}
+
+.title h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 3rem;
+    font-weight: 500;
+}
+
+.cmd-container {
+    display: flex;
+    color: #FFA1A1;
+}
+
 .cmd {
-    margin: 0 20px;
+    margin-left: 2.5em;
 }
 
 .cmd:hover {
     cursor: pointer;
 }
 
+#github{
+    transform: translateY(-3px);
+}
+
+@media (max-width: 972px){
+    .landing-page{
+        padding: 1em 0
+    }
+
+    #github{
+        transform: translateY(1px);
+    }
+    
+    
+    header {
+        flex-direction: column;
+    }
+
+    .title {
+        text-align: center;
+    }
+
+    .title h1 {
+        font-size: 2.5rem;
+    }
+
+
+    .cmd-container {
+        margin-top: 2em;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .cmd {
+        margin: auto;
+    }
+
+}
+
 main {
-    /* see whether I want to change that to grid */
-    /* in order to freeze the width of the center word cell */
     display: flex;
-    justify-content:space-between;
-    align-items: center;
-    flex-wrap: wrap;
     color: #32D6B8;
-    /* make top margin evolve according to width */
-    margin-top: 10px;
+    margin-top: 2em;
+    align-items: flex-start;
+    justify-content: space-between;
 }
 
-.center {
-    font-size: 260px;
-    max-width: 60%;
+.center__word {
+    font-size: 10rem;
 }
 
-.center .meta {
-    font-size: 7%;
-    margin-right: 20px;
+
+#center {
+    width: 55%;
+    margin-top: 10em;
 }
 
-.suggestion-container{
-    font-size: 100px;
-    max-height: 600px;
+#suggestion-container {
     width: 40%;
+    margin-bottom: 0;
+    box-sizing: border-box;
     overflow: scroll;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    max-height: 80vh;
+    /* TODO: eliminate vertical scroll in low viewports */
+    -ms-overflow-style: none;  /* IE and Edge (hide scrollbar)*/
+    scrollbar-width: none;  /* Firefox (hide scrollbar)*/
 }
-/* Hide scrollbar for Chrome, Safari and Opera */
-.suggestion-container::-webkit-scrollbar {
+
+#suggestion-container::-webkit-scrollbar {
     display: none;
 }
 
 .suggestion {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    margin-bottom: 10px;
-}
-
-.suggestion:hover {
-    cursor: pointer;
-}
-
-.suggestion .meta {
-    font-size: 15%;
-    text-align: left;
-    margin-right: 30px;
+    align-items: center;
+    margin-bottom: 1em;
 }
 
 .suggestion__word {
+    font-size: 4rem;
     margin-left: auto;
-    border: red 1px solid;
     text-align: right;
     white-space: nowrap;
 }
 
-.pinyin {
-    font-weight: 700;
+.suggestion__word:hover {
+    cursor: pointer;
 }
 
+.suggestion .meta {
+    font-size: 0.75rem;
+}
+
+.pinyin {
+    font-weight: bold;
+}
+
+.hidden-meta {
+    display: none
+}
+
+.hidden {
+    display: none
+}
+
+@media (max-width: 972px){
+    main {
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        height: 60vh;
+    }
+    
+    #center {
+        width: 100%;
+        margin-top: 0;
+        text-align: center;
+    }
+
+    #suggestion-container {
+        width: 100%;
+        display: flex;
+        align-items: baseline;
+        margin-top: 3em;
+    }
+
+    .suggestion {
+        flex-direction: column-reverse;
+        margin: 0;
+        margin-right: 1em;
+    }
+
+
+    .center__word {
+        font-size: 6rem;
+        white-space: nowrap;
+        overflow: scroll;
+    }
+
+    .suggestion__word {
+        font-size: 3rem;
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    .suggestion .meta {
+        font-size: 1em;
+        text-align: center;
+    }
+
+    .suggestion .meta .pinyin {
+        white-space: nowrap;
+    }
+
+    .suggestion .meta .translation {
+        display: none;
+    }
+
+    .hidden-meta {
+        display: block;
+    }
+
+}
 
 .overlay{
     background-color:rgba(0, 0, 0, 0.838);
@@ -135,8 +232,11 @@ main {
     color: white;
 }
 
-.hidden {
-    display: none
+.overlay-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1px;
+    margin-top: 5em;
 }
 
 .setting {
@@ -150,9 +250,4 @@ main {
 
 #hsk-level-slider {
     width: 100%;
-}
-
-.overlay-container {
-    max-width: 600px;
-    margin: 0 auto;
 }
