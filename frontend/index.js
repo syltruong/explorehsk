@@ -31,14 +31,6 @@ hskLevelSlider.addEventListener("input", renderHskLevel)
 
 // Display suggestions
 
-function forceWrap(word) {
-    if (word.length > 3) {
-        return word.slice(0,2) + "</br>" + word.slice(2,)
-    } else {
-        return word
-    }
-}
-
 function toggleMeta(elt) {  
     elt.querySelector(".meta").classList.toggle("hidden-meta")
 }
@@ -102,8 +94,8 @@ async function getRandomWord() {
 }
 
 function populateCenter(source) {
-    centerDiv = document.getElementById("center")
-    centerDiv.querySelector(".center__word").innerHTML = forceWrap(source["Word"])
+    const centerDiv = document.getElementById("center")
+    centerDiv.querySelector(".center__word").innerHTML = source["Word"]
     centerDiv.querySelector(".pinyin").innerText = source["Pronunciation"]
     centerDiv.querySelector(".translation").innerText = source["Definition"]
 }
@@ -155,7 +147,19 @@ function populateSuggestions(mostSimilar) {
     makeSuggestionsClickable()
 }
 
-getRandomWord()
+// rendering
+
+function setMainHeight() {
+    if (window.innerWidth < 972){
+        mainElt = document.querySelector("main")
+        mainElt.style.height = `calc(100vh - ${mainElt.offsetTop}px)`
+    }
+}
+
+window.addEventListener("resize", setMainHeight)
+
+//getRandomWord()
+setMainHeight()
 renderHskLevel()
 makeSuggestionsHoverable()
 makeSuggestionsClickable()
