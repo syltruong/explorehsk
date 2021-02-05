@@ -1,5 +1,7 @@
 html {
     font-size: 100%;
+    /* https://developers.google.com/web/updates/2015/10/tap-to-search */
+    -webkit-user-select: none
 }
 
 body {
