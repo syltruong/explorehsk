@@ -158,7 +158,7 @@ function setMainHeight() {
 
 window.addEventListener("resize", setMainHeight)
 
-//getRandomWord()
+getRandomWord()
 setMainHeight()
 renderHskLevel()
 makeSuggestionsHoverable()
