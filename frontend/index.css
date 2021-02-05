@@ -54,10 +54,19 @@ header {
     cursor: pointer;
 }
 
+#github{
+    transform: translateY(-3px);
+}
+
 @media (max-width: 972px){
     .landing-page{
         padding: 1em 0
     }
+
+    #github{
+        transform: translateY(1px);
+    }
+    
     
     header {
         flex-direction: column;
@@ -75,11 +84,11 @@ header {
     .cmd-container {
         margin-top: 2em;
         width: 100%;
-        justify-content: space-around;
+        justify-content: space-between;
     }
 
     .cmd {
-        margin-left: 0;
+        margin: auto;
     }
 
 }
