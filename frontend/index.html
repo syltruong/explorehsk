@@ -4,6 +4,7 @@
         <title>Explore HSK - 词语接龙</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#E0F5EA"/>
         <link href="index.css" rel="stylesheet"/>
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -23,7 +24,7 @@
                 <div class="cmd-container en">
                     <div class="cmd" id="randomBtn">random</div>
                     <div class="cmd comingSoon" id="searchBtn">search</div>
-                    <div class="cmd comingSoon" id="aboutBtn">about</div>
+                    <div class="cmd" id="aboutBtn">about</div>
                     <div class="cmd" id="settingsBtn">settings</div>
                     <div class="cmd" id="github">
                         <a href="https://github.com/syltruong/danci-explorer" target="_blank">
@@ -33,7 +34,7 @@
             </header>
             <main>
                 <div id="center">
-                    <div class="center__word">努力学习</div>
+                    <div class="center__word">努力学习什么什么</div>
                     <div class="meta">
                         <div class="en pinyin">xue2 xi2</div>
                         <div class="en translation">to learn; to studyto learn; to studyto learn; to studyto learn; to studyto learn; to studyto learn; to studyto learn; to studyto learn; to study</div>
@@ -92,8 +93,30 @@
                 </div>
             </main>
         </div>
-        <div id="coming-soon-overlay" class="hidden overlay">
-            <span class="en">Coming soon</span>
+        <div id="coming-soon-overlay" class="hidden overlay en">
+            Coming soon
+        </div>
+        <div id="about-overlay" class="hidden overlay en">
+            <div class="overlay-container">
+                <h2>
+                    About
+                </h2>
+                <p>
+                    This webapp is meant to help you review your HSK vocabulary.
+                    The idea is to recommend, for every flashcard, related flashcards.
+                </p>
+                <p>
+                    Closeness of vocabulary is determined by usage of characters and meaning.
+                </p>
+                <h2>
+                    Questions? Issues? Suggestions?
+                </h2>
+                <p>
+                    Please visit the
+                    <a href="https://github.com/syltruong/danci-explorer" target="_blank"> github project</a>, 
+                    and open an issue, or even a pull request!
+                </p>
+            </div>
         </div>
         <div id="settings-overlay" class="en hidden overlay">
             <div class="overlay-container">
