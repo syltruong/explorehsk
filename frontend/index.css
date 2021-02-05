@@ -76,7 +76,6 @@ header {
         margin-top: 2em;
         width: 100%;
         justify-content: space-around;
-        border: red 1px solid;
     }
 
     .cmd {
@@ -157,13 +156,13 @@ main {
         flex-direction: column;
         justify-content: space-around;
         align-items: center;
+        height: 60vh;
     }
     
     #center {
         width: 100%;
         margin-top: 0;
         text-align: center;
-        border: blue 1px solid;
     }
 
     #suggestion-container {
@@ -171,18 +170,19 @@ main {
         display: flex;
         align-items: baseline;
         margin-top: 3em;
-        border: green 1px solid;
     }
 
     .suggestion {
         flex-direction: column-reverse;
-        margin: 0 1em;
+        margin: 0;
+        margin-right: 1em;
     }
 
 
     .center__word {
         font-size: 6rem;
         white-space: nowrap;
+        overflow: scroll;
     }
 
     .suggestion__word {
@@ -193,6 +193,11 @@ main {
 
     .suggestion .meta {
         font-size: 1em;
+        text-align: center;
+    }
+
+    .suggestion .meta .pinyin {
+        white-space: nowrap;
     }
 
     .suggestion .meta .translation {
