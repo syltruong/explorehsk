@@ -16,7 +16,7 @@ cd backend && make build-model
 ```
 
 This will create a `model.pkl` file in `backend/data/model.pkl`.
-It will download and load a [fasttext](fasttext.cc) language model in memory, so make sure to provision enough RAM is your Docker settings.
+It will download and load a [fasttext](https://fasttext.cc/) language model in memory, so make sure to provision enough RAM is your Docker settings.
 
 ### 2. Build the app
 ```bash
