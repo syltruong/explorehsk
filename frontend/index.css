@@ -58,6 +58,7 @@ main {
     color: #32D6B8;
     margin-top: 2em;
     align-items: flex-start;
+    justify-content: space-between;
 }
 
 .center__word {
@@ -65,14 +66,14 @@ main {
 }
 
 .suggestion__word {
-    font-size: 5rem;
+    font-size: 4rem;
     margin-left: auto;
     text-align: right;
     white-space: nowrap;
 }
 
 #center {
-    width: 60%;
+    width: 55%;
     margin-top: 10em;
 }
 
@@ -93,6 +94,7 @@ main {
 
 .suggestion {
     display: flex;
+    justify-content: space-between;
     align-items: center;
     margin-bottom: 1em;
 }
