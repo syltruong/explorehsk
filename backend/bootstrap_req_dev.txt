@@ -1,0 +1,15 @@
+requests
+numpy
+scipy
+pandas
+loguru
+ipykernel
+ipywidgets
+wget
+pylint
+black
+fasttext
+gunicorn
+flask
+sklearn
+flask-cors
