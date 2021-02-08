@@ -152,17 +152,17 @@ function populateSuggestions(mostSimilar) {
 
 // rendering
 
-function setMainHeight() {
-    if (window.innerWidth < 972){
-        mainElt = document.querySelector("main")
-        mainElt.style.height = `calc(85vh - ${mainElt.offsetTop}px)`
-    }
-}
+// function setMainHeight() {
+//     if (window.innerWidth < 972){
+//         mainElt = document.querySelector("main")
+//         mainElt.style.height = `calc(100vh - ${mainElt.offsetTop}px)`
+//     }
+// }
 
-window.addEventListener("resize", setMainHeight)
+// window.addEventListener("resize", setMainHeight)
 
 getRandomWord()
-setMainHeight()
+// setMainHeight()
 renderHskLevel()
 makeSuggestionsHoverable()
 makeSuggestionsClickable()

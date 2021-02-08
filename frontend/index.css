@@ -48,6 +48,11 @@ header {
     font-weight: 500;
 }
 
+.brief {
+    padding-top: 0.5em;
+    font-size: 0.75rem;
+}
+
 .cmd-container {
     display: flex;
     color: #FFA1A1;
@@ -67,7 +72,8 @@ header {
 
 @media (max-width: 972px){
     .landing-page{
-        padding: 1em 0
+        padding: 0;
+        padding-top: 1em
     }
 
     #github{
@@ -170,9 +176,8 @@ main {
 @media (max-width: 972px){
     main {
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
-        margin-top: 5vh;
     }
     
     #center {
@@ -181,11 +186,18 @@ main {
         text-align: center;
     }
 
+    #center .meta {
+        height: 10em;
+        overflow-x: scroll;
+        overflow-y: scroll; 
+    }
+
     #suggestion-container {
         width: 100%;
         display: flex;
         align-items: baseline;
-        margin-top: 3em;
+        margin-top: 1em;
+        /* -webkit-overflow-scrolling: touch; */
     }
 
     .suggestion {
