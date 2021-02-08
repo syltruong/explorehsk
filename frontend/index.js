@@ -63,10 +63,16 @@ async function populateFrom(word) {
 
         populateCenter(jsonData.source)
         populateSuggestions(jsonData.most_similar)
+        resetSuggestionScroller()
 
     } catch(err) {
         console.log(err)
     }
+}
+
+function resetSuggestionScroller() {
+    document.getElementById("suggestion-container").scrollTop = 0
+    document.getElementById("suggestion-container").scrollLeft = 0
 }
 
 
@@ -75,10 +81,9 @@ async function populateFrom(word) {
 //// Random
 
 const randomBtn = document.getElementById("randomBtn")
-const baseUrl = "http://167.99.75.225:5000/" 
+const baseUrl = "http://explorehsk.com:5000/" 
 
 randomBtn.addEventListener("click", () => {
-    console.log("click")
     getRandomWord()
 })
 
@@ -87,9 +92,9 @@ async function getRandomWord() {
         const response = await fetch(baseUrl + `random?hskLevel=${hskLevelSlider.value}`);
         const jsonData = await response.json();
 
-        console.log(jsonData)
         populateCenter(jsonData.source)
         populateSuggestions(jsonData.most_similar)
+        resetSuggestionScroller()
 
     } catch(err) {
         console.log(err)
@@ -152,17 +157,17 @@ function populateSuggestions(mostSimilar) {
 
 // rendering
 
-function setMainHeight() {
-    if (window.innerWidth < 972){
-        mainElt = document.querySelector("main")
-        mainElt.style.height = `calc(85vh - ${mainElt.offsetTop}px)`
-    }
-}
+// function setMainHeight() {
+//     if (window.innerWidth < 972){
+//         mainElt = document.querySelector("main")
+//         mainElt.style.height = `calc(100vh - ${mainElt.offsetTop}px)`
+//     }
+// }
 
-window.addEventListener("resize", setMainHeight)
+// window.addEventListener("resize", setMainHeight)
 
 getRandomWord()
-setMainHeight()
+// setMainHeight()
 renderHskLevel()
 makeSuggestionsHoverable()
 makeSuggestionsClickable()
