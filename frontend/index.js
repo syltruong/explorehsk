@@ -63,10 +63,16 @@ async function populateFrom(word) {
 
         populateCenter(jsonData.source)
         populateSuggestions(jsonData.most_similar)
+        resetSuggestionScroller()
 
     } catch(err) {
         console.log(err)
     }
+}
+
+function resetSuggestionScroller() {
+    document.getElementById("suggestion-container").scrollTop = 0
+    document.getElementById("suggestion-container").scrollLeft = 0
 }
 
 
@@ -90,6 +96,7 @@ async function getRandomWord() {
         console.log(jsonData)
         populateCenter(jsonData.source)
         populateSuggestions(jsonData.most_similar)
+        resetSuggestionScroller()
 
     } catch(err) {
         console.log(err)
