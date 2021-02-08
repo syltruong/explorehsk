@@ -81,10 +81,9 @@ function resetSuggestionScroller() {
 //// Random
 
 const randomBtn = document.getElementById("randomBtn")
-const baseUrl = "http://167.99.75.225:5000/" 
+const baseUrl = "http://explorehsk.com:5000/" 
 
 randomBtn.addEventListener("click", () => {
-    console.log("click")
     getRandomWord()
 })
 
@@ -93,7 +92,6 @@ async function getRandomWord() {
         const response = await fetch(baseUrl + `random?hskLevel=${hskLevelSlider.value}`);
         const jsonData = await response.json();
 
-        console.log(jsonData)
         populateCenter(jsonData.source)
         populateSuggestions(jsonData.most_similar)
         resetSuggestionScroller()
