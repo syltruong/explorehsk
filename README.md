@@ -33,8 +33,10 @@ docker-compose up
 ```
 
 ## Todo
-- [ ] Search
 - [ ] Radical decomposition
+- [ ] Search
+- [ ] Traditional characters
+- [ ] pīnyīn diacritics
 
 ## References
 
