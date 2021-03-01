@@ -7,6 +7,7 @@ import pandas as pd
 from loguru import logger
 
 from src.config import PATH_TO_FASTTEXT_BIN, PATH_TO_HSK_CSV, PROJECTOR_DATA_DIR
+from src.utils import add_pinyin_diatrics
 
 
 def get_ft_model():
@@ -68,6 +69,8 @@ def load_words() -> pd.DataFrame:
         columns.append("HSK Level")
 
     df = df[columns]
+
+    df["Pronunciation"] = df["Pronunciation"].apply(add_pinyin_diatrics)
     
     return df
 
