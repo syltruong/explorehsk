@@ -271,7 +271,7 @@ main {
     width: 100%;
 }
 
-#use-pinyin-diatrics-checkbox{
+#use-pinyin-accents-checkbox{
     /* Double-sized Checkboxes */
     -ms-transform: scale(2); /* IE */
     -moz-transform: scale(2); /* FF */

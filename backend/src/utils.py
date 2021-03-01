@@ -12,14 +12,14 @@ PINYIN_V = "u" + "\u0308"
 
 VOWELS = ["a", "e", "i", "o", "u", "v"]
 
-def add_pinyin_diatrics(pinyin: str) -> str:
+def add_pinyin_accents(pinyin: str) -> str:
     """
     Implement rules from http://www.pinyin.info/rules/where.html
 
     Parameters
     ----------
     pinyin : str
-        plain pinyin with no diatrics and numbers at the end of each character, 
+        plain pinyin with no accents and numbers at the end of each character, 
         ie "nv3 peng2 you3", "xing4 fu3"
     """
 
