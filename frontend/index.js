@@ -29,8 +29,16 @@ function renderHskLevel() {
 hskLevelSlider.addEventListener("click", event => {
     event.stopPropagation();
 })
-hskLevelSlider.addEventListener("input", renderHskLevel)
+hskLevelSlider.addEventListener("input", () => {
+    renderHskLevel();
+    refreshWords();
+})
 
+const usePinyinDiatricsCheckbox = document.getElementById('use-pinyin-diatrics-checkbox')
+usePinyinDiatricsCheckbox.addEventListener("click", event => {
+    event.stopPropagation();
+    refreshWords();
+})
 
 // Display suggestions
 
@@ -101,10 +109,24 @@ async function getRandomWord() {
     }
 }
 
+//// Refresh after settings change
+
+function refreshWords() {
+    const centerDiv = document.getElementById("center")
+    const word = centerDiv.querySelector(".center__word").innerText
+    populateFrom(word)
+}
+
 function populateCenter(source) {
     const centerDiv = document.getElementById("center")
     centerDiv.querySelector(".center__word").innerHTML = source["Word"]
-    centerDiv.querySelector(".pinyin").innerText = source["Pronunciation"]
+
+    if (usePinyinDiatricsCheckbox.checked) {
+        centerDiv.querySelector(".pinyin").innerText = source["Pronunciation_with_diatrics"]
+    } else {
+        centerDiv.querySelector(".pinyin").innerText = source["Pronunciation"]
+    }
+
     centerDiv.querySelector(".translation").innerText = source["Definition"]
 }
 
@@ -135,7 +157,11 @@ function populateSuggestions(mostSimilar) {
         const pinyinDiv = document.createElement("div")
         pinyinDiv.classList.add("en") 
         pinyinDiv.classList.add("pinyin")
-        pinyinDiv.innerText = item["Pronunciation"]
+        if (usePinyinDiatricsCheckbox.checked) {
+            pinyinDiv.innerText = item["Pronunciation_with_diatrics"]
+        } else {
+            pinyinDiv.innerText = item["Pronunciation"]
+        }
 
         const translationDiv = document.createElement("div")
         translationDiv.classList.add("en") 
