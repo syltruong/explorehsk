@@ -70,8 +70,8 @@ def load_words() -> pd.DataFrame:
 
     df = df[columns]
 
-    df["Pronunciation"] = df["Pronunciation"].apply(add_pinyin_diatrics)
-    
+    df["Pronunciation_with_diatrics"] = df["Pronunciation"].apply(add_pinyin_diatrics)
+
     return df
 
 
