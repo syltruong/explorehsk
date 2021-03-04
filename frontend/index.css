@@ -271,6 +271,14 @@ main {
     width: 100%;
 }
 
+#use-pinyin-accents-checkbox{
+    /* Double-sized Checkboxes */
+    -ms-transform: scale(2); /* IE */
+    -moz-transform: scale(2); /* FF */
+    -webkit-transform: scale(2); /* Safari and Chrome */
+    -o-transform: scale(2); /* Opera */
+    transform: translateY(-3px) scale(2);
+}
 
 #about-overlay h2{
     margin-top: 3em;

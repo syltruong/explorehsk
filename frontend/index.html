@@ -127,10 +127,18 @@
                 <div class="overlay-title">Settings</div>
                 <div class="setting">
                     <div class="setting-title">
-                        <span class="en">HSK Level </span>
-                        <span id="hsk-level-span" class="en"></span>
+                        <label class="en" for="hsk-level-slider">HSK Level <span id="hsk-level-span" class="en"></span></label>
                     </div>
-                    <input type="range" min="1" max="6" value="4" id="hsk-level-slider">
+                    <input type="range" min="1" max="6" value="4" id="hsk-level-slider" name="hsk-level-slider">
+                </div>
+                <div class="setting">
+                    <div class="setting-title">
+                        <label class="en" for="use-pinyin-accents-checkbox">
+                            Use pīnyīn accents
+                        </label>
+                        <input type="checkbox" id="use-pinyin-accents-checkbox" name="use-pinyin-accents-checkbox">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

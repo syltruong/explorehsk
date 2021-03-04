@@ -19,7 +19,7 @@ FROM basic AS dev
 COPY requirements.dev.txt .
 RUN pip install -r requirements.dev.txt && pip freeze > requirements.dev.txt
 
-FROM dev AS buider
+FROM dev AS builder
 
 # hack to optionally copy the fasttext bin file
 # and skip the following download step

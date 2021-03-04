@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 
-DOCKER_IMAGE_NAME = danci-explorer
+DOCKER_IMAGE_NAME = explorehsk
 
 # install dependencies
 .PHONY: install-dependencies
