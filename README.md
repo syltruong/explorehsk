@@ -36,7 +36,7 @@ docker-compose up
 - [ ] Radical decomposition
 - [ ] Search
 - [ ] Traditional characters
-- [ ] pīnyīn diacritics
+- [x] pīnyīn diacritics
 
 ## References
 
