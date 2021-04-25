@@ -33,6 +33,7 @@ docker-compose up
 ```
 
 ## Todo
+- [ ] React app refactoring
 - [ ] Radical decomposition
 - [ ] Search
 - [ ] Traditional characters

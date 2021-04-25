@@ -9,7 +9,12 @@ services:
             - "80:80"
         depends_on:
             - backend
-            
+    
+    web-react:
+        build:
+            context: ./frontend-react
+        ports:
+            - "3000:3000"    
 
     backend:
         build: 
