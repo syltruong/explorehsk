@@ -5,3 +5,4 @@
 *.tsv
 cc.zh.300.bin*
 model.pkl*
+*.DS_Store
