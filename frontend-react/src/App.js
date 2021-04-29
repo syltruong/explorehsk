@@ -38,8 +38,7 @@ function App() {
     const [centerWord, setCenterWord] = useState(exampleWord)
     const [suggestionWords, setSuggestionWords] = useState(exampleSuggestions)
 
-    // componentDidMount
-    useEffect(() => {
+    function populateRandom() {
         const jsonData = getRandomWord()        
         
         jsonData.then(value => {
@@ -47,11 +46,14 @@ function App() {
             setCenterWord(value.source)
             setSuggestionWords(value.most_similar.slice(1)) 
         })
-    }, [])
+    }
+
+    // componentDidMount
+    useEffect(populateRandom, [])
 
     return (
         <div id="app-container">
-            <Header />
+            <Header onRandom={populateRandom}/>
             <Main centerWord={centerWord} suggestionWords={suggestionWords}/>
         </div>
     )

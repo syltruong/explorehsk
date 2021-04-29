@@ -18,11 +18,12 @@ function Title() {
 }
 
 
-function Nav() {
+function Nav(props) {
+    const {onRandom} = props
     return (
         <nav>
             {/* think about settings those to <button></button> tags */}
-            <button className={'en'}>random</button> 
+            <button className={'en'} onClick={onRandom}>random</button> 
             <button className={'en'}>search</button>
             <button className={'en'}>about</button>
             <button className={'en'}>settings</button>
@@ -35,11 +36,12 @@ function Nav() {
     )
 }
 
-function Header() {
+function Header(props) {
+    const {onRandom} = props
     return (
         <header>
             <Title />
-            <Nav />
+            <Nav onRandom={onRandom}/>
         </header>
     )
 }
