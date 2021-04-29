@@ -1,4 +1,20 @@
-.App {
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;700&family=Noto+Sans+SC:wght@500;700&display=swap');
+
+body {
+  background-color: #E0F5EA;
+  margin: 0;
+}
+
+.zh {
+  font-family: 'Noto Sans SC', sans-serif;
+}
+
+.en {
+  font-family: 'Fira Code', monospace;
+}
+
+
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +51,4 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */
