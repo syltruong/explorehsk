@@ -1,3 +1,5 @@
+import {Link} from 'react-router-dom'
+
 import github from './github.svg';
 import './Header.css';
 
@@ -22,11 +24,18 @@ function Nav(props) {
     const {onRandom} = props
     return (
         <nav>
-            {/* think about settings those to <button></button> tags */}
-            <button className={'en'} onClick={onRandom}>random</button> 
+            <Link to="/">
+                <button className={'en'} onClick={onRandom}>random</button> 
+            </Link>
+            
             <button className={'en'}>search</button>
-            <button className={'en'}>about</button>
+            
+            <Link to="/about">
+                <button className={'en'}>about</button>
+            </Link>
+            
             <button className={'en'}>settings</button>
+            
             <button>
                 <a href="https://github.com/syltruong/explorehsk" target="_blank">
                     <img src={github} alt="github octocat" />

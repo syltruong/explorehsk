@@ -2,7 +2,7 @@ import './About.css'
 
 function About() {
     return (
-        <div>
+        <section className={"en"}>
             <h2>About</h2>
             <p>
                 This webapp is meant to help you review your HSK vocabulary.
@@ -15,11 +15,10 @@ function About() {
                 Questions? Issues? Suggestions?
             </h2>
             <p>
-                Please visit the
-                <a href="https://github.com/syltruong/explorehsk" target="_blank"> github project</a>, 
+                Please visit the <a href="https://github.com/syltruong/explorehsk" target="_blank">github project</a>, 
                 and open an issue, or even a pull request!
             </p>
-        </div>
+        </section>
     )
 }
 

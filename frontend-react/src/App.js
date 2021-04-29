@@ -1,7 +1,9 @@
 import {useState, useEffect} from 'react'
+import {Switch, Route} from 'react-router-dom'
 
 import Header from './Header.js';
 import Main from './Main.js';
+import About from './About.js';
 
 import './App.css';
 
@@ -76,11 +78,19 @@ function App() {
     return (
         <div id="app-container">
             <Header onRandom={populateRandom}/>
-            <Main 
-                centerWord={centerWord} 
-                suggestionWords={suggestionWords} 
-                onWordClick={populateFromWord}
-            />
+            <Switch>
+                <Route exact path="/">
+                    <Main 
+                        centerWord={centerWord} 
+                        suggestionWords={suggestionWords} 
+                        onWordClick={populateFromWord}
+                    />
+                </Route>
+                <Route exact path="/about">
+                    <About />
+                </Route>
+
+            </Switch>
         </div>
     )
 }
