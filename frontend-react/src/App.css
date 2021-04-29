@@ -21,7 +21,8 @@ body {
 
     #app-container {
         margin: 0 auto;
-        padding-top: 4em; 
+        padding: 0 5em;
+        padding-top: 4em;
         max-width: 1200px;
     }
 }
