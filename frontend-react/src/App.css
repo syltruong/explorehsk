@@ -9,6 +9,11 @@ body {
     margin: 0;
 }
 
+a {
+  color: inherit;
+  text-decoration: inherit
+}
+
 .zh {
     font-family: 'Noto Sans SC', sans-serif;
 }
