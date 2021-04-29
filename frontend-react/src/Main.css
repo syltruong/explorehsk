@@ -29,7 +29,6 @@ main {
     width: 100%;
     display: flex;
     font-size: 0.8rem;
-    white-space: nowrap;
     overflow: scroll;
 }
 
@@ -47,13 +46,14 @@ main {
 
 .suggestion .zh {
     font-size: 3rem;
+    white-space: nowrap;
 }
 
 @media (min-width: 972px){
     main {
         flex-direction: row;
         align-items: center;
-        height: calc(100vh - 220px);
+        height: calc(100vh - 186px);
     }
     
     #center-container {

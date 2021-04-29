@@ -1,30 +1,15 @@
-import {useState} from 'react'
 import './Main.css'
 
-const exampleWord = {
-    word: "什么",
-    pronunciation: "shen3 me5",
-    translation: "what"
-}
+function Center(props) {
 
-const numberSuggestions = 20
-
-const exampleSuggestions = []
-
-for (let i=0; i < numberSuggestions; i++) {
-    exampleSuggestions.push(exampleWord)
-}
-
-function Center() {
-
-    const [word, setWord] = useState(exampleWord)
+    const {word} = props;
     
     return (
         <div id={'center-container'}>
-            <div id={'center-word'} className={'zh'}>{word.word}</div>
+            <div id={'center-word'} className={'zh'}>{word.Word}</div>
             <div className={'en meta'}>
-                <div>{word.pronunciation}</div>
-                <div>{word.translation}</div>
+                <div>{word.Pronunciation}</div>
+                <div>{word.Definition}</div>
             </div>
         </div>
     )
@@ -47,16 +32,18 @@ function Suggestion(props) {
 }
 
 
-function Suggestions() {
+function Suggestions(props) {
 
-    const [words, setWords] = useState(exampleSuggestions)
+    const {words} = props
 
     const wordComponents = words.map(
         word => (
             <Suggestion 
-                word={word.word} 
-                pronunciation={word.pronunciation} 
-                translation={word.translation}
+                word={word.Word} 
+                pronunciation={word.Pronunciation} 
+                translation={word.Definition}
+                // key={word.word + word.pronunciation} 
+                // TODO: set a unique key, will likely come from the backend
             />
             )
     )
@@ -71,11 +58,14 @@ function Suggestions() {
 
 
 
-function Main() {
+function Main(props) {
+
+    const {centerWord, suggestionWords} = props
+
     return (
         <main>
-            <Center />
-            <Suggestions />
+            <Center word={centerWord} />
+            <Suggestions words={suggestionWords} />
         </main>
     )
 }

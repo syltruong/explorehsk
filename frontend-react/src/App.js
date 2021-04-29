@@ -1,36 +1,60 @@
-import logo from './logo.svg';
+import {useState, useEffect} from 'react'
+
 import Header from './Header.js';
 import Main from './Main.js';
+
 import './App.css';
 
+const exampleWord = {
+    word: "什么",
+    pronunciation: "shen3 me5",
+    translation: "what"
+}
+
+const numberSuggestions = 20
+
+const exampleSuggestions = []
+
+for (let i=0; i < numberSuggestions; i++) {
+    exampleSuggestions.push(exampleWord)
+}
+
+const baseUrl = "http://explorehsk.com:5000/"
+
+async function getRandomWord() {
+    try {
+        const response = await fetch(baseUrl + `random`);
+        const jsonData = await response.json();
+
+        return jsonData
+
+    } catch(err) {
+        console.log(err)
+    }
+}
+
 function App() {
+
+    const [centerWord, setCenterWord] = useState(exampleWord)
+    const [suggestionWords, setSuggestionWords] = useState(exampleSuggestions)
+
+    // componentDidMount
+    useEffect(() => {
+        const jsonData = getRandomWord()        
+        
+        jsonData.then(value => {
+            console.log(value)
+            setCenterWord(value.source)
+            setSuggestionWords(value.most_similar.slice(1)) 
+        })
+    }, [])
+
     return (
         <div id="app-container">
             <Header />
-            <Main />
+            <Main centerWord={centerWord} suggestionWords={suggestionWords}/>
         </div>
     )
 }
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
 
 export default App;
