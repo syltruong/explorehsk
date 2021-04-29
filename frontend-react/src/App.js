@@ -26,7 +26,19 @@ async function getRandomWord() {
         const response = await fetch(baseUrl + `random`);
         const jsonData = await response.json();
 
-        return jsonData
+        return jsonData;
+
+    } catch(err) {
+        console.log(err)
+    }
+}
+
+async function getSuggestions(word) {
+    try {
+        const response = await fetch(baseUrl + `query?word=${word}`);
+        const jsonData = await response.json();
+
+        return jsonData;
 
     } catch(err) {
         console.log(err)
@@ -48,13 +60,27 @@ function App() {
         })
     }
 
+    function populateFromWord(word) {
+        const jsonData = getSuggestions(word)        
+        
+        jsonData.then(value => {
+            console.log(value)
+            setCenterWord(value.source)
+            setSuggestionWords(value.most_similar.slice(1)) 
+        })
+    }
+
     // componentDidMount
     useEffect(populateRandom, [])
 
     return (
         <div id="app-container">
             <Header onRandom={populateRandom}/>
-            <Main centerWord={centerWord} suggestionWords={suggestionWords}/>
+            <Main 
+                centerWord={centerWord} 
+                suggestionWords={suggestionWords} 
+                onWordClick={populateFromWord}
+            />
         </div>
     )
 }

@@ -18,10 +18,10 @@ function Center(props) {
 
 
 function Suggestion(props) {
-    const {word, pronunciation, translation} = props;
+    const {word, pronunciation, translation, onWordClick} = props;
 
     return (
-        <div className={"suggestion"}>
+        <div className={"suggestion"} onClick={() => {onWordClick(word)}}>
             <div className={'zh'}>{word}</div>
             <div className={'en meta'}>
                 <div>{pronunciation}</div>
@@ -34,7 +34,7 @@ function Suggestion(props) {
 
 function Suggestions(props) {
 
-    const {words} = props
+    const {words, onWordClick} = props
 
     const wordComponents = words.map(
         word => (
@@ -42,6 +42,7 @@ function Suggestions(props) {
                 word={word.Word} 
                 pronunciation={word.Pronunciation} 
                 translation={word.Definition}
+                onWordClick={onWordClick}
                 // key={word.word + word.pronunciation} 
                 // TODO: set a unique key, will likely come from the backend
             />
@@ -60,12 +61,12 @@ function Suggestions(props) {
 
 function Main(props) {
 
-    const {centerWord, suggestionWords} = props
+    const {centerWord, suggestionWords, onWordClick} = props
 
     return (
         <main>
             <Center word={centerWord} />
-            <Suggestions words={suggestionWords} />
+            <Suggestions words={suggestionWords} onWordClick={onWordClick}/>
         </main>
     )
 }

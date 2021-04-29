@@ -44,6 +44,10 @@ main {
     text-align: center;
 }
 
+.suggestion:hover {
+    cursor: pointer
+}
+
 .suggestion .zh {
     font-size: 3rem;
     white-space: nowrap;
