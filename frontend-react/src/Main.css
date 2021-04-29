@@ -1,0 +1,52 @@
+main {
+    display: flex;
+    color: #32D6B8;
+    margin-top: 2em;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#center-container {
+    text-align: center;
+}
+
+#center-container .meta {
+    height: 10em;
+    overflow-x: scroll;
+    overflow-y: scroll; 
+}
+
+#center-word {
+    font-size: 6rem;
+}
+
+.meta > div:first-child {
+    font-weight: 700;
+}
+
+#suggestions-container {
+    width: 100%;
+    display: flex;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    overflow: scroll;
+}
+
+#suggestions-container::-webkit-scrollbar {
+    display: none;
+}
+
+.suggestion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 1em;
+    text-align: center;
+}
+
+.suggestion .zh {
+    font-size: 3rem;
+}
+
+
