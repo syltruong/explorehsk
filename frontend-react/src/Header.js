@@ -24,7 +24,7 @@ function Nav(props) {
     const {onRandom} = props
     return (
         <nav>
-            <Link to="/">
+            <Link to="/random">
                 <button className={'en'} onClick={onRandom}>random</button> 
             </Link>
             

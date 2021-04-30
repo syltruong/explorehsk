@@ -1,5 +1,6 @@
-import {useState, useEffect} from 'react'
-import {Switch, Route} from 'react-router-dom'
+
+import {useState} from 'react'
+import {Switch, Route, Redirect} from 'react-router-dom'
 
 import Header from './Header.js';
 import Main from './Main.js';
@@ -13,7 +14,6 @@ async function getRandomWord() {
     try {
         const response = await fetch(baseUrl + `random`);
         const jsonData = await response.json();
-
         return jsonData;
 
     } catch(err) {
@@ -24,23 +24,31 @@ async function getRandomWord() {
 
 function App() {
 
+    const [randomWord, setRandomWord] = useState("什么")
+
     return (
         <div id="app-container">
             <Header />
             <Switch>
-                {/* <Route exact path="/">
-                    <Main 
-                        centerWord={centerWord} 
-                        suggestionWords={suggestionWords} 
-                        onWordClick={populateFromWord}
-                    />
-                </Route> */}
-                <Route exact path="/about">
-                    <About />
-                </Route>
-                <Route path="/word/:word">
-                    <Main />
-                </Route>
+                <Redirect exact from="/" to="/random" />
+                <Route 
+                    exact 
+                    path="/random"
+                    render={
+                        () => {
+                            const jsonData = getRandomWord()
+                            jsonData.then(value => {
+                                setRandomWord(value.source.Word)
+                            })
+
+                            return <Redirect to={`/word/${randomWord}`}/>
+                        }
+                    }
+                />
+                 
+                <Route exact path="/about" component={About} />
+                <Route path="/word/:word" component={Main} />
+
             </Switch>
         </div>
     )
