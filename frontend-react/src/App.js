@@ -5,6 +5,7 @@ import {Switch, Route, Redirect} from 'react-router-dom'
 import Header from './Header.js';
 import Main from './Main.js';
 import About from './About.js';
+import Settings from './Settings.js';
 
 import './App.css';
 
@@ -47,6 +48,7 @@ function App() {
                 />
                  
                 <Route exact path="/about" component={About} />
+                <Route exact path="/settings" component={Settings} />
                 <Route path="/word/:word" component={Main} />
 
             </Switch>

@@ -34,7 +34,9 @@ function Nav(props) {
                 <button className={'en'}>about</button>
             </Link>
             
-            <button className={'en'}>settings</button>
+            <Link to="/settings">
+                <button className={'en'}>settings</button>
+            </Link>
             
             <button>
                 <a href="https://github.com/syltruong/explorehsk" target="_blank">
