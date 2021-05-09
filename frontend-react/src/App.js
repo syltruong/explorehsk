@@ -26,6 +26,7 @@ async function getRandomWord() {
 function App() {
 
     const [randomWord, setRandomWord] = useState("什么")
+    const [hskLevel, setHskLevel] = useState(4)  // TODO: get this to be set with cookie
 
     return (
         <div id="app-container">
@@ -48,8 +49,12 @@ function App() {
                 />
                  
                 <Route exact path="/about" component={About} />
-                <Route exact path="/settings" component={Settings} />
-                <Route path="/word/:word" component={Main} />
+                <Route exact path="/settings">
+                    <Settings hskLevel={hskLevel} setHskLevel={setHskLevel}/> 
+                </Route>
+                <Route path="/word/:word">
+                    <Main hskLevel={hskLevel} />
+                </Route>
 
             </Switch>
         </div>

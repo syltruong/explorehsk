@@ -19,9 +19,9 @@ for (let i=0; i < numberSuggestions; i++) {
 
 const baseUrl = "http://explorehsk.com:5000/"
 
-async function getSuggestions(word) {
+async function getSuggestions(word, hskLevel=4) {
     try {
-        const response = await fetch(baseUrl + `query?word=${word}`);
+        const response = await fetch(baseUrl + `query?word=${word}&hskLevel=${hskLevel}`);
         const jsonData = await response.json();
 
         return jsonData;
@@ -91,15 +91,16 @@ function Suggestions(props) {
 }
 
 
-function Main() {
+function Main(props) {
 
     const {word} = useParams()
+    const {hskLevel} = props
 
     const [centerWord, setCenterWord] = useState(exampleWord)
     const [suggestionWords, setSuggestionWords] = useState(exampleSuggestions)
 
     function populateFromWord() {
-        const jsonData = getSuggestions(word)        
+        const jsonData = getSuggestions(word, hskLevel)        
         
         jsonData.then(value => {
             setCenterWord(value.source)
@@ -107,7 +108,7 @@ function Main() {
         })
     }
 
-    useEffect(populateFromWord, [word])
+    useEffect(populateFromWord, [word, hskLevel])
 
     return (
         <main>

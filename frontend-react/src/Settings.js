@@ -1,9 +1,8 @@
 // import './About.css'
-import {useState} from "react"
 
-function Settings() {
+function Settings(props) {
     
-    const [hskLevel, setHskLevel] = useState(4)
+    const {hskLevel, setHskLevel} = props
    
     const onChange = event => {
         setHskLevel(event.target.value)
