@@ -10,6 +10,10 @@ label {
     font-size: 1.5em;
 }
 
+label:hover, input:hover {
+    cursor: pointer;
+}
+
 section button {
     font-size: 1.5em;
     color: #FFA1A1;
