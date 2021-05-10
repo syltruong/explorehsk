@@ -59,7 +59,7 @@ function App() {
                     /> 
                 </Route>
                 <Route path="/word/:word">
-                    <Main hskLevel={hskLevel} />
+                    <Main hskLevel={hskLevel} usePinyinAccents={usePinyinAccents}/>
                 </Route>
 
             </Switch>

@@ -31,16 +31,19 @@ async function getSuggestions(word, hskLevel=4) {
     }
 }
 
+function getPronunciation(word, usePinyinAccents) {
+    return (usePinyinAccents) ? word.Pronunciation_with_accents : word.Pronunciation
+}
 
 function Center(props) {
 
-    const {word} = props;
+    const {word, usePinyinAccents} = props;
     
     return (
         <div id={'center-container'}>
             <div id={'center-word'} className={'zh'}>{word.Word}</div>
             <div className={'en meta'}>
-                <div>{word.Pronunciation}</div>
+                <div>{getPronunciation(word, usePinyinAccents)}</div>
                 <div>{word.Definition}</div>
             </div>
         </div>
@@ -66,14 +69,14 @@ function Suggestion(props) {
 
 function Suggestions(props) {
 
-    const {words} = props
+    const {words, usePinyinAccents} = props
 
     const wordComponents = words.map(
         word => (
             <Link to={`/word/${word.Word}`}>
                 <Suggestion 
                     word={word.Word} 
-                    pronunciation={word.Pronunciation} 
+                    pronunciation={getPronunciation(word, usePinyinAccents)} 
                     translation={word.Definition}
                     // key={word.word + word.pronunciation} 
                     // TODO: set a unique key, will likely come from the backend
@@ -94,7 +97,7 @@ function Suggestions(props) {
 function Main(props) {
 
     const {word} = useParams()
-    const {hskLevel} = props
+    const {hskLevel, usePinyinAccents} = props
 
     const [centerWord, setCenterWord] = useState(exampleWord)
     const [suggestionWords, setSuggestionWords] = useState(exampleSuggestions)
@@ -112,8 +115,8 @@ function Main(props) {
 
     return (
         <main>
-            <Center word={centerWord} />
-            <Suggestions words={suggestionWords}/>
+            <Center word={centerWord} usePinyinAccents={usePinyinAccents}/>
+            <Suggestions words={suggestionWords} usePinyinAccents={usePinyinAccents}/>
         </main>
     )
 }
