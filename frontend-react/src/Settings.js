@@ -1,4 +1,4 @@
-// import './About.css'
+import './Settings.css'
 
 import {useHistory} from 'react-router-dom'
 
@@ -20,31 +20,37 @@ function Settings(props) {
         <section className={"en"}>
             <h2>Settings</h2>
             <form>
-                <label for="hsk-level-slider">
-                    HSK Level <span id="hsk-level-span">{hskLevel}</span>
-                </label>
-                <input 
-                    type="range" 
-                    min="1" 
-                    max="6" 
-                    value={hskLevel}
-                    name="hsk-level-slider" 
-                    onChange={onChangeHskLevel}
-                />
+
+                <div className="setting">
+                    <label for="hsk-level-slider">
+                        HSK Level <span id="hsk-level-span">{hskLevel}</span>
+                    </label>
+                    <input 
+                        type="range" 
+                        min="1" 
+                        max="6" 
+                        value={hskLevel}
+                        name="hsk-level-slider" 
+                        id="hsk-level-slider"  
+                        onChange={onChangeHskLevel}
+                    />
+                </div>
                 
-                <label for="use-pinyin-accents-checkbox">
-                    Use pīnyīn accents
-                </label>
-                <input 
-                    type="checkbox" 
-                    id="use-pinyin-accents-checkbox" 
-                    name="use-pinyin-accents-checkbox" 
-                    onChange={onChangeUsePinyinAccents}
-                    defaultChecked={usePinyinAccents}
-                />
+                <div className="setting">
+                    <label for="use-pinyin-accents-checkbox">
+                        Use pīnyīn accents
+                    </label>
+                    <input 
+                        type="checkbox" 
+                        id="use-pinyin-accents-checkbox" 
+                        name="use-pinyin-accents-checkbox" 
+                        onChange={onChangeUsePinyinAccents}
+                        defaultChecked={usePinyinAccents}
+                    />
+                </div>
             </form>
             
-            <button onClick={() => {history.goBack()}}> back </button>
+            <button onClick={() => {history.goBack()}}>&#60; back </button>
         </section>
     )
 }

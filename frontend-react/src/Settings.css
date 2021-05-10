@@ -1,0 +1,16 @@
+#hsk-level-slider {
+    width: 100%;
+}
+
+.setting {
+    margin: 2em;
+}
+
+label {
+    font-size: 1.5em;
+}
+
+section button {
+    font-size: 1.5em;
+    color: #FFA1A1;
+}
