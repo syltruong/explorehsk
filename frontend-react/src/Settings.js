@@ -1,5 +1,7 @@
 // import './About.css'
 
+import {useHistory} from 'react-router-dom'
+
 function Settings(props) {
     
     const {hskLevel, setHskLevel} = props
@@ -7,6 +9,8 @@ function Settings(props) {
     const onChange = event => {
         setHskLevel(event.target.value)
     }
+
+    let history = useHistory();
 
     return (
         <section className={"en"}>
@@ -24,6 +28,7 @@ function Settings(props) {
                     onChange={onChange}
                 />
             </form>
+            <button onClick={() => {history.goBack()}}> back </button>
         </section>
     )
 }
