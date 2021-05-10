@@ -55,10 +55,24 @@ function Center(props) {
 function Suggestion(props) {
     const {word, pronunciation, translation} = props;
 
+    const [displayMeta, setDisplayMeta] = useState('none')
+
     return (
-        <div className={"suggestion"}>
-            <div className={'zh'}>{word}</div>
-            <div className={'en meta'}>
+        <div 
+            className={"suggestion"} 
+            onMouseLeave={() => setDisplayMeta('none')}
+        >
+            <div 
+                className={'zh'} 
+                onMouseEnter={() => setDisplayMeta('block')}
+            >
+                {word}
+            </div>
+            
+            <div 
+                className={'en meta'}
+                style={{display: displayMeta}}
+            >
                 <div>{pronunciation}</div>
                 <div>{translation}</div>
             </div>
