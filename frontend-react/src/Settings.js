@@ -4,10 +4,14 @@ import {useHistory} from 'react-router-dom'
 
 function Settings(props) {
     
-    const {hskLevel, setHskLevel} = props
+    const {hskLevel, setHskLevel, usePinyinAccents, setUsePinyinAccents} = props
    
-    const onChange = event => {
+    const onChangeHskLevel = event => {
         setHskLevel(event.target.value)
+    }
+
+    const onChangeUsePinyinAccents = event => {
+        setUsePinyinAccents(event.target.checked)
     }
 
     let history = useHistory();
@@ -25,9 +29,21 @@ function Settings(props) {
                     max="6" 
                     value={hskLevel}
                     name="hsk-level-slider" 
-                    onChange={onChange}
+                    onChange={onChangeHskLevel}
+                />
+                
+                <label for="use-pinyin-accents-checkbox">
+                    Use pīnyīn accents
+                </label>
+                <input 
+                    type="checkbox" 
+                    id="use-pinyin-accents-checkbox" 
+                    name="use-pinyin-accents-checkbox" 
+                    onChange={onChangeUsePinyinAccents}
+                    defaultChecked={usePinyinAccents}
                 />
             </form>
+            
             <button onClick={() => {history.goBack()}}> back </button>
         </section>
     )

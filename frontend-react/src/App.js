@@ -27,6 +27,7 @@ function App() {
 
     const [randomWord, setRandomWord] = useState("什么")
     const [hskLevel, setHskLevel] = useState(4)  // TODO: get this to be set with cookie
+    const [usePinyinAccents, setUsePinyinAccents] = useState(false)  // TODO: get this to be set with cookie
 
     return (
         <div id="app-container">
@@ -50,7 +51,12 @@ function App() {
                  
                 <Route exact path="/about" component={About} />
                 <Route exact path="/settings">
-                    <Settings hskLevel={hskLevel} setHskLevel={setHskLevel}/> 
+                    <Settings 
+                        hskLevel={hskLevel} 
+                        setHskLevel={setHskLevel}
+                        usePinyinAccents={usePinyinAccents}
+                        setUsePinyinAccents={setUsePinyinAccents}
+                    /> 
                 </Route>
                 <Route path="/word/:word">
                     <Main hskLevel={hskLevel} />
