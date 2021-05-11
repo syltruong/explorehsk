@@ -5,13 +5,13 @@ import {useHistory} from 'react-router-dom'
 function Settings(props) {
     
     const {hskLevel, setHskLevel, usePinyinAccents, setUsePinyinAccents} = props
-   
+
     const onChangeHskLevel = event => {
-        setHskLevel(event.target.value)
+        setHskLevel(parseInt(event.target.value))
     }
 
     const onChangeUsePinyinAccents = event => {
-        setUsePinyinAccents(event.target.checked)
+        setUsePinyinAccents(event.target.value === "true")
     }
 
     let history = useHistory();
@@ -21,7 +21,15 @@ function Settings(props) {
     for (let i=1; i<7; i++) {
         hskLevels.push(
             <div>
-                <input id={`hsk${i}`} type="radio" name="hskLevel"/><label for={`hsk${i}`}>{i}</label>
+                <input 
+                    id={`hsk${i}`} 
+                    type="radio" 
+                    name="hskLevel" 
+                    checked={hskLevel === i} 
+                    value={i}
+                    onChange={onChangeHskLevel}
+                />
+                <label for={`hsk${i}`}>{i}</label>
             </div>
         )
     }
@@ -32,21 +40,6 @@ function Settings(props) {
             <form>
 
                 <div className="setting">
-                    <label for="hsk-level-slider">
-                        HSK Level <span id="hsk-level-span">{hskLevel}</span>
-                    </label>
-                    <input 
-                        type="range" 
-                        min="1" 
-                        max="6" 
-                        value={hskLevel}
-                        name="hsk-level-slider" 
-                        id="hsk-level-slider"  
-                        onChange={onChangeHskLevel}
-                    />
-                </div>
-
-                <div className="setting">
                     <label>HSK Level</label>
                     <div id="hskLevels">
                         {hskLevels}
@@ -54,16 +47,27 @@ function Settings(props) {
                 </div>
                 
                 <div className="setting">
-                    <label for="use-pinyin-accents-checkbox">
-                        Use pīnyīn accents
-                    </label>
-                    <input 
-                        type="checkbox" 
-                        id="use-pinyin-accents-checkbox" 
-                        name="use-pinyin-accents-checkbox" 
-                        onChange={onChangeUsePinyinAccents}
-                        defaultChecked={usePinyinAccents}
-                    />
+                    <label>Use {(usePinyinAccents) ? "pīnyīn" : "pinyin"} accents</label>
+                    <div>
+                        <input 
+                            id={"usePinyinAccentsTrue"} 
+                            type="radio" 
+                            name="usePinyinAccents" 
+                            value={true}
+                            checked={usePinyinAccents} 
+                            onChange={onChangeUsePinyinAccents}
+                        />
+                        <label for={"usePinyinAccentsTrue"}>yes</label>
+                        <input 
+                            id={"usePinyinAccentsFalse"}  
+                            type="radio" 
+                            name="usePinyinAccents" 
+                            value={false}
+                            checked={!(usePinyinAccents)}
+                            onChange={onChangeUsePinyinAccents}
+                        />
+                        <label for={"usePinyinAccentsFalse"}>no</label>
+                    </div>
                 </div>
             </form>
             

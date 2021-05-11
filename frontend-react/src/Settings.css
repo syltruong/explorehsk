@@ -24,7 +24,8 @@ input[type="radio"] {
 }
 
 input[type="radio"] + label{
-    opacity: 30%;
+    opacity: 35%;
+    margin-right: 1em;
 }
 
 input[type="radio"]:checked + label {
