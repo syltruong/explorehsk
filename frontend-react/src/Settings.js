@@ -29,7 +29,7 @@ function Settings(props) {
                     value={i}
                     onChange={onChangeHskLevel}
                 />
-                <label for={`hsk${i}`}>{i}</label>
+                <label htmlFor={`hsk${i}`}>{i}</label>
             </div>
         )
     }
@@ -57,7 +57,7 @@ function Settings(props) {
                             checked={usePinyinAccents} 
                             onChange={onChangeUsePinyinAccents}
                         />
-                        <label for={"usePinyinAccentsTrue"}>yes</label>
+                        <label htmlFor={"usePinyinAccentsTrue"}>yes</label>
                         <input 
                             id={"usePinyinAccentsFalse"}  
                             type="radio" 
@@ -66,7 +66,7 @@ function Settings(props) {
                             checked={!(usePinyinAccents)}
                             onChange={onChangeUsePinyinAccents}
                         />
-                        <label for={"usePinyinAccentsFalse"}>no</label>
+                        <label htmlFor={"usePinyinAccentsFalse"}>no</label>
                     </div>
                 </div>
             </form>
