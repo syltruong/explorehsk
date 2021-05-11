@@ -18,3 +18,20 @@ section button {
     font-size: 1.5em;
     color: #FFA1A1;
 }
+
+input[type="radio"] {
+    display:none;   
+}
+
+input[type="radio"] + label{
+    opacity: 30%;
+}
+
+input[type="radio"]:checked + label {
+    opacity: 100%;
+}
+
+#hskLevels {
+    display: flex;
+    justify-content: space-between;
+}

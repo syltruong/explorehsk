@@ -16,6 +16,16 @@ function Settings(props) {
 
     let history = useHistory();
 
+    const hskLevels = []
+
+    for (let i=1; i<7; i++) {
+        hskLevels.push(
+            <div>
+                <input id={`hsk${i}`} type="radio" name="hskLevel"/><label for={`hsk${i}`}>{i}</label>
+            </div>
+        )
+    }
+
     return (
         <section className={"en"}>
             <h2>Settings</h2>
@@ -34,6 +44,13 @@ function Settings(props) {
                         id="hsk-level-slider"  
                         onChange={onChangeHskLevel}
                     />
+                </div>
+
+                <div className="setting">
+                    <label>HSK Level</label>
+                    <div id="hskLevels">
+                        {hskLevels}
+                    </div>
                 </div>
                 
                 <div className="setting">
