@@ -3,9 +3,9 @@ import {useState} from 'react'
 import {Switch, Route, Redirect} from 'react-router-dom'
 
 import Header from './Header.js';
-import Main from './Main.js';
-import About from './About.js';
-import Settings from './Settings.js';
+import Main from './pages/Main.js';
+import About from './pages/About.js';
+import Settings from './pages/Settings.js';
 
 import './App.css';
 
