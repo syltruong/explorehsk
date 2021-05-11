@@ -39,7 +39,7 @@ function Nav(props) {
             </Link>
             
             <button>
-                <a href="https://github.com/syltruong/explorehsk" target="_blank">
+                <a href="https://github.com/syltruong/explorehsk" target="_blank" rel="noreferrer">
                     <img src={github} alt="github octocat" />
                 </a>
             </button>

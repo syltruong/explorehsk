@@ -15,7 +15,7 @@ function About() {
                 Questions? Issues? Suggestions?
             </h2>
             <p>
-                Please visit the <a href="https://github.com/syltruong/explorehsk" target="_blank">github project</a>, 
+                Please visit the <a href="https://github.com/syltruong/explorehsk" target="_blank" rel="noreferrer">github project</a>, 
                 and open an issue, or even a pull request!
             </p>
         </section>
