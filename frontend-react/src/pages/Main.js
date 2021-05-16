@@ -17,7 +17,7 @@ for (let i=0; i < numberSuggestions; i++) {
     exampleSuggestions.push(exampleWord)
 }
 
-const baseUrl = "http://explorehsk.com:5000/"
+const baseUrl = process.env.REACT_APP_API_BASE_URL
 
 async function getSuggestions(word, hskLevel=4) {
     try {

@@ -9,7 +9,7 @@ import Settings from './pages/Settings.js';
 
 import './App.css';
 
-const baseUrl = "http://explorehsk.com:5000/"
+const baseUrl = process.env.REACT_APP_API_BASE_URL
 
 async function getRandomWord() {
     try {
