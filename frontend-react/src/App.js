@@ -7,6 +7,8 @@ import Main from './pages/Main.js';
 import About from './pages/About.js';
 import Settings from './pages/Settings.js';
 
+import useLocalStorage from './utils/use-local-storage.js';
+
 import './App.css';
 
 const baseUrl = process.env.REACT_APP_API_BASE_URL
@@ -26,8 +28,8 @@ async function getRandomWord() {
 function App() {
 
     const [randomWord, setRandomWord] = useState("什么")
-    const [hskLevel, setHskLevel] = useState(4)  // TODO: get this to be set with cookie
-    const [usePinyinAccents, setUsePinyinAccents] = useState(false)  // TODO: get this to be set with cookie
+    const [hskLevel, setHskLevel] = useLocalStorage("hskLevel", 4)
+    const [usePinyinAccents, setUsePinyinAccents] = useLocalStorage("usePinyinAccents", false)
 
     return (
         <div id="app-container">
