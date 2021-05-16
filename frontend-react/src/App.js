@@ -31,6 +31,15 @@ function App() {
     const [hskLevel, setHskLevel] = useLocalStorage("hskLevel", 4)
     const [usePinyinAccents, setUsePinyinAccents] = useLocalStorage("usePinyinAccents", false)
 
+    const renderRandom = () => {
+        const jsonData = getRandomWord()
+        jsonData.then(value => {
+            setRandomWord(value.source.Word)
+        })
+
+        return <Redirect to={`/word/${randomWord}`}/>
+    }
+
     return (
         <div id="app-container">
             <Header />
@@ -39,16 +48,7 @@ function App() {
                 <Route 
                     exact 
                     path="/random"
-                    render={
-                        () => {
-                            const jsonData = getRandomWord()
-                            jsonData.then(value => {
-                                setRandomWord(value.source.Word)
-                            })
-
-                            return <Redirect to={`/word/${randomWord}`}/>
-                        }
-                    }
+                    render={renderRandom}
                 />
                  
                 <Route exact path="/about" component={About} />
