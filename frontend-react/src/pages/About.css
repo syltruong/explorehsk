@@ -1,0 +1,14 @@
+section {
+    color: #32D6B8;
+    max-width: 500px;
+    margin: 5em auto;
+}
+
+section h2 {
+    margin-top: 2em;
+}
+
+section a {
+    color: #FFA1A1;
+    text-decoration: none;
+}

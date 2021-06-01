@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;700&family=Noto+Sans+SC:wght@500;700&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #E0F5EA;
+    margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: inherit
+}
+
+.zh {
+    font-family: 'Noto Sans SC', sans-serif;
+}
+
+.en {
+    font-family: 'Fira Code', monospace;
+}
+
+@media (min-width: 972px){
+
+    #app-container {
+        margin: 0 auto;
+        padding: 0 3em;
+        padding-top: 2em;
+        max-width: 1300px;
+    }
+}
