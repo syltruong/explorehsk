@@ -24,12 +24,12 @@ input[type="radio"] {
 }
 
 input[type="radio"] + label{
-    opacity: 35%;
+    opacity: 0.35;
     margin-right: 1em;
 }
 
 input[type="radio"]:checked + label {
-    opacity: 100%;
+    opacity: 1.0;
 }
 
 #hskLevels {

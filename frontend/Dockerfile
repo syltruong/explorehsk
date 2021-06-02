@@ -1,9 +1,24 @@
-FROM nginx:alpine
+# pull the base image
+FROM node:alpine
 
-ARG EXTERNAL_IP
+# set the working direction
+WORKDIR /app
 
-COPY . /usr/share/nginx/html
+# add `/app/node_modules/.bin` to $PATH
+ENV PATH /app/node_modules/.bin:$PATH
 
-RUN if [ ! -z "$EXTERNAL_IP" ]; then \
-        sed -i -e "s/0\.0\.0\.0/$EXTERNAL_IP/g" /usr/share/nginx/html/index.js; \
-    fi
+# install app dependencies
+COPY package.json ./
+
+COPY package-lock.json ./
+
+RUN npm install
+RUN npm install -g serve
+
+# add app
+COPY . ./
+RUN npm run build
+
+# start app
+# deployment recipe from https://create-react-app.dev/docs/deployment/#static-server
+CMD ["serve", "-s", "build", "-l", "3000"]
