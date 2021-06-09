@@ -1,4 +1,8 @@
-from src.utils import build_word_graph
+from itertools import product
+
+import pytest
+
+from src.utils import build_word_graph, generate_random_walk, WordGraphPathNotFoundException
 
 
 def test_build_word_graph():
@@ -20,3 +24,30 @@ def test_build_word_graph():
     
     for key in expected_graph.keys():
         assert key in result_graph
+
+
+def test_generate_random_walk():
+    chars = list(range(10))
+    words = [f"{char1}{char2}" for char1, char2 in product(chars, repeat=2)]
+
+    word_graph = build_word_graph(words)
+
+    walk = generate_random_walk(word_graph, n_steps=4)
+
+    # 1. check the length of the random walk
+    assert len(walk) == 4
+    
+    # 2. check that the link characters are not repeated
+    common_chars = []
+    for i in range(len(walk) - 1):
+        common_char = walk[i][0] if walk[i][0] in walk[i+1] else walk[i][1]
+        common_chars.append(common_char)
+
+    assert len(set(common_chars)) == (len(walk) - 1)
+
+
+def test_generate_random_walk_exception():
+    word_graph = {str(i) : [] for i in range(10)}
+
+    with pytest.raises(WordGraphPathNotFoundException):
+        _ = generate_random_walk(word_graph, n_steps=4)
