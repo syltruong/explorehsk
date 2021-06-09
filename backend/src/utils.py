@@ -12,6 +12,7 @@ PINYIN_V = "u" + "\u0308"
 
 VOWELS = ["a", "e", "i", "o", "u", "v"]
 
+
 def add_pinyin_accents(pinyin: str) -> str:
     """
     Implement rules from http://www.pinyin.info/rules/where.html
@@ -62,3 +63,41 @@ def add_pinyin_accents(pinyin: str) -> str:
                 break
     
     return " ".join(out_chars)
+
+
+def build_word_graph(words: list[str]) -> dict[str, list[str]]:
+    """
+    Build graph of words.
+
+    The output is a dict which keys are words and
+    values are words that share exactly one common character
+
+    Parameters
+    ----------
+    words : list[str]
+        List of words
+
+    Returns
+    -------
+    dict[str, list[str]]
+        Graph of words
+        Only words of exactly two characters are kept.
+    """
+
+    words = [word for word in words if len(word)==2]
+
+    def _words_are_linked(word1, word2):
+        if word1 == word2:
+            return False
+        
+        if (word1[0] in word2) or (word1[1] in word2):
+            return True
+        
+        return False
+    
+    word_graph = {
+        word : [w for w in words if _words_are_linked(word, w)]
+        for word in words
+    }
+
+    return word_graph
