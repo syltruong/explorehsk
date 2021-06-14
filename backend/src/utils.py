@@ -1,3 +1,4 @@
+from collections import defaultdict
 import random
 import unicodedata
 
@@ -164,7 +165,7 @@ def score_occurence(word: str, word_occurence: dict[str, float]) -> float:
     raise ValueError(f"Could not score {word}")
 
 
-def build_word_graph(words: list[str]) -> dict[str, list[str]]:
+def build_char_to_words(words: list[str]) -> dict[str, set[str]]:
     """
     Build graph of words.
 
@@ -185,24 +186,24 @@ def build_word_graph(words: list[str]) -> dict[str, list[str]]:
 
     words = [word for word in words if len(word)==2]
 
-    def _words_are_linked(word1, word2):
-        if word1 == word2:
-            return False
-        
-        if (word1[0] in word2) or (word1[1] in word2):
-            return True
-        
-        return False
+    char_to_words = defaultdict(set)
+
+    for word in words:
+        for char in word:
+            char_to_words[char].add(word)
+
+    return char_to_words
+
+
+def get_adj_words(word, char_to_words):
     
-    word_graph = {
-        word : [w for w in words if _words_are_linked(word, w)]
-        for word in words
-    }
+    ret = set().union(*[char_to_words[char] for char in word])
+    ret.remove(word)
 
-    return word_graph
+    return ret
 
 
-def generate_random_walk(word_graph: dict[str, list[str]], n_steps: int) -> list[str]:
+def generate_random_walk(char_to_words: dict[str, set[str]], n_steps: int) -> list[str]:
     """
     Generate a random walk in the word graph.
 
@@ -219,9 +220,9 @@ def generate_random_walk(word_graph: dict[str, list[str]], n_steps: int) -> list
         list of word series
     """
 
-    def _is_valid_candidate(word, past_words, word_graph):
+    def _is_valid_candidate(word, past_words):
         for past_word in past_words:
-            if word in word_graph[past_word]:
+            if word in get_adj_words(past_word, char_to_words):
                 return False
         return True
 
@@ -247,7 +248,7 @@ def generate_random_walk(word_graph: dict[str, list[str]], n_steps: int) -> list
                 if len(ret) >= n_steps:
                     return ret
                 
-                adj_words = [w for w in word_graph[word] if _is_valid_candidate(w, ret[:-1], word_graph)]
+                adj_words = [w for w in get_adj_words(word, char_to_words) if _is_valid_candidate(w, ret[:-1])]
 
                 random.shuffle(adj_words)
                 
@@ -257,7 +258,7 @@ def generate_random_walk(word_graph: dict[str, list[str]], n_steps: int) -> list
         
         return None
 
-    words = list(word_graph.keys())
+    words = list(set().union(*char_to_words.values()))
     random.shuffle(words)
 
     for attempt in range(MAX_RANDOM_WALK_ATTEMPTS):

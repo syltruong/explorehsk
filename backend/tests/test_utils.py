@@ -3,7 +3,8 @@ from itertools import product
 import pytest
 
 from src.utils import (
-    build_word_graph,
+    build_char_to_words,
+    get_adj_words,
     generate_random_walk,
     WordGraphPathNotFoundException,
     pinyin_to_number_tones,
@@ -41,34 +42,36 @@ def test_pinyin_to_number_tones():
         assert out_word == expected_out_word
 
 
-def test_build_word_graph():
+def test_build_char_to_words():
     words = ["对不起", "对面", "面子", "幸福", "幸苦", "方面", "谢谢"]
 
-    expected_graph = {
-        "对面" : ["方面", "面子"],
-        "面子" : ["方面", "对面"], 
-        "幸福" : ["幸苦"],
-        "幸苦" : ["幸福"],
-        "方面" : ["对面", "面子"], 
-        "谢谢" : []
+    expected_char_to_words = {
+        "对" : {"对面"},
+        "面" : {"对面", "面子", "方面"},
+        "方" : {"方面"},
+        "子" : {"面子"},
+        "幸" : {"幸福", "幸苦"},
+        "福" : {"幸福"},
+        "苦" : {"幸苦"},
+        "谢" : {"谢谢"}
     }
 
-    result_graph = build_word_graph(words)
+    result_char_to_words = build_char_to_words(words)
 
-    for key, value in result_graph.items():
-        assert set(expected_graph[key]) == set(value)
+    for key, value in result_char_to_words.items():
+        assert expected_char_to_words[key] == value
     
-    for key in expected_graph.keys():
-        assert key in result_graph
+    for key in expected_char_to_words.keys():
+        assert key in result_char_to_words
 
 
 def test_generate_random_walk():
     chars = list(range(10))
     words = [f"{char1}{char2}" for char1, char2 in product(chars, repeat=2)]
 
-    word_graph = build_word_graph(words)
+    char_to_words = build_char_to_words(words)
 
-    walk = generate_random_walk(word_graph, n_steps=4)
+    walk = generate_random_walk(char_to_words, n_steps=4)
 
     # 1. check the length of the random walk
     assert len(walk) == 4
@@ -83,7 +86,7 @@ def test_generate_random_walk():
 
 
 def test_generate_random_walk_exception():
-    word_graph = {str(i) : [] for i in range(10)}
+    char_to_words = {str(i) : [f"{i}{i}"] for i in range(10)}
 
     with pytest.raises(WordGraphPathNotFoundException):
-        _ = generate_random_walk(word_graph, n_steps=4)
+        _ = generate_random_walk(char_to_words, n_steps=4)
