@@ -28,4 +28,4 @@ COPY Dockerfile cc.zh.300.bin* /
 
 # install zh language, results in 13Gb size image
 # this creates a file `/cc.zh.300.bin`
-RUN python -c "import fasttext.util; fasttext.util.download_model('zh')" && rm -f /cc.zh.300.bin.gz
+RUN python -c "import fasttext.util; fasttext.util.download_model('zh', if_exists='ignore')" && rm -f /cc.zh.300.bin.gz
