@@ -1,3 +1,5 @@
+import random
+
 from loguru import logger
 
 TONE_ACCENTS = {
@@ -11,6 +13,9 @@ TONE_ACCENTS = {
 PINYIN_V = "u" + "\u0308"
 
 VOWELS = ["a", "e", "i", "o", "u", "v"]
+
+MAX_RANDOM_WALK_ATTEMPTS = 10
+
 
 def add_pinyin_accents(pinyin: str) -> str:
     """
@@ -62,3 +67,116 @@ def add_pinyin_accents(pinyin: str) -> str:
                 break
     
     return " ".join(out_chars)
+
+
+def build_word_graph(words: list[str]) -> dict[str, list[str]]:
+    """
+    Build graph of words.
+
+    The output is a dict which keys are words and
+    values are words that share exactly one common character
+
+    Parameters
+    ----------
+    words : list[str]
+        List of words
+
+    Returns
+    -------
+    dict[str, list[str]]
+        Graph of words
+        Only words of exactly two characters are kept.
+    """
+
+    words = [word for word in words if len(word)==2]
+
+    def _words_are_linked(word1, word2):
+        if word1 == word2:
+            return False
+        
+        if (word1[0] in word2) or (word1[1] in word2):
+            return True
+        
+        return False
+    
+    word_graph = {
+        word : [w for w in words if _words_are_linked(word, w)]
+        for word in words
+    }
+
+    return word_graph
+
+
+def generate_random_walk(word_graph: dict[str, list[str]], n_steps: int) -> list[str]:
+    """
+    Generate a random walk in the word graph.
+
+    Parameters
+    ----------
+    word_graph : dict[str, list[str]]
+        graph of words
+    n_steps : int
+        target number of steps in the random walk
+
+    Returns
+    -------
+    list[str]
+        list of word series
+    """
+
+    def _is_valid_candidate(word, past_words, word_graph):
+        for past_word in past_words:
+            if word in word_graph[past_word]:
+                return False
+        return True
+
+    def _random_walk_from_start(start_word: str):
+        # perform a DFS to find a path with the specified number of steps
+        visited = []
+        
+        to_visit = [(start_word, 0)]
+        ret = [start_word]
+        
+        while len(to_visit) > 0:
+            
+            word, rank = to_visit.pop(0)
+            
+            if word not in visited:
+                visited.append(word)
+                
+                if rank < len(ret):
+                    ret = ret[:rank]
+            
+                ret.append(word)
+
+                if len(ret) >= n_steps:
+                    return ret
+                
+                adj_words = [w for w in word_graph[word] if _is_valid_candidate(w, ret[:-1], word_graph)]
+
+                random.shuffle(adj_words)
+                
+                for adj_word in adj_words:
+                    if adj_word not in visited:
+                        to_visit.insert(0, (adj_word, rank+1))
+        
+        return None
+
+    words = list(word_graph.keys())
+    random.shuffle(words)
+
+    for attempt in range(MAX_RANDOM_WALK_ATTEMPTS):
+
+        start_word = words.pop()
+        logger.info(f"attempt {attempt + 1}")
+        logger.info(f"starting with word {start_word}")
+
+        candidate_walk = _random_walk_from_start(start_word)
+
+        if candidate_walk is not None:
+            return candidate_walk
+    
+    raise WordGraphPathNotFoundException
+
+class WordGraphPathNotFoundException(Exception):
+    pass

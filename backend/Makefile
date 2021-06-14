@@ -15,6 +15,22 @@ install-dependencies-dev:
 	docker build --target dev -t $(DOCKER_IMAGE_NAME):dev .
 	docker run --rm $(DOCKER_IMAGE_NAME):dev cat requirements.dev.txt > requirements.dev.txt
 
+.PHONY: shell
+shell:
+	docker build --target dev -t $(DOCKER_IMAGE_NAME):dev .
+	docker run --rm -it -v $(shell pwd):/workspace $(DOCKER_IMAGE_NAME):dev bash
+
+.PHONY: notebook
+notebook:
+	docker build --target dev -t $(DOCKER_IMAGE_NAME):dev .
+	docker run \
+		--rm \
+		-it \
+		-v $(shell pwd):/workspace \
+		-p 8888:8888 \
+		$(DOCKER_IMAGE_NAME):dev \
+		bash -c "jupyter notebook --ip 0.0.0.0 --no-browser --allow-root"
+
 # this step needs to be ran before serving the backend flask API
 # it dumps `data/model.pkl`
 .PHONY: build-model

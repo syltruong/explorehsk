@@ -7,6 +7,7 @@ import pandas as pd
 from loguru import logger
 from sklearn.metrics.pairwise import cosine_similarity
 
+from src.utils import build_word_graph
 
 class Model(object):
     def __init__(self, words_df: pd.DataFrame, embeddings: np.array):
@@ -38,6 +39,9 @@ class Model(object):
         distances = cosine_similarity(self.embeddings, self.embeddings)
         self.sorted_idx = np.fliplr(np.argsort(distances, axis=1))
         self.sorted_distances = np.fliplr(np.sort(distances, axis=1))
+
+        logger.debug("Build the word graph")
+        self.word_graph = build_word_graph(self.words_df["Word"])
 
     def ping(self):
         return f"I am alive with {len(self.word_to_idx)} words."

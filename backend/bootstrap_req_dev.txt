@@ -13,3 +13,4 @@ gunicorn
 flask
 sklearn
 flask-cors
+pytest
