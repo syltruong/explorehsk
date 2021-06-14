@@ -3,8 +3,14 @@ import pickle
 
 from loguru import logger
 from src.model import Model
-from flask import Flask, jsonify, request
+from flask import Flask, json, jsonify, request
 from flask_cors import CORS
+
+from src.utils import (
+    generate_random_walk, 
+    WordGraphPathNotFoundException, 
+    MAX_RANDOM_WALK_ATTEMPTS
+)
 
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
@@ -42,3 +48,21 @@ def query():
             return f'word {word} does not exist in vocab', 400 
     else:
         return 'Must provide argument `word`', 400
+
+@app.route("/new_game")
+def new_game():
+    # TODO: support filtering games according to HSK levels
+    # hsk_level = request.args.get("hskLevel", default=None, type=int)
+    n_steps = request.args.get("nSteps", default=4, type=int)
+
+    try:
+        walk = generate_random_walk(model.word_graph, n_steps=n_steps)
+        return jsonify(
+            {
+                'start' : walk[0],
+                'target' : walk[-1],
+                'solution' : walk 
+            }
+        )
+    except WordGraphPathNotFoundException:
+        return f'Did not find a new game path after {MAX_RANDOM_WALK_ATTEMPTS} attempts'
