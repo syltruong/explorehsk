@@ -71,7 +71,7 @@ def add_pinyin_accents(pinyin: str) -> str:
     return " ".join(out_chars)
 
 
-def _strip_accents(s):
+def _strip_accents(s: str):
     
     ret = []
     
@@ -118,6 +118,50 @@ def pinyin_to_number_tones(pinyin: str) -> str:
             ret.append(f"{word_no_accent}5")
     
     return " ".join(ret)
+
+
+def _get_all_substrings(word: str, min_len: int=1):
+    for j in range(len(word), min_len - 1, -1):
+        yield j, [word[i:i+j] for i in range(0, len(word) - j + 1)]
+
+
+def score_occurence(word: str, word_occurence: dict[str, float]) -> float:
+    """
+    Get an occurence score for a given input word.
+    If the word is not found in the dict, try scoring the substrings, 
+    from the longest ones to the shortest ones.
+
+    Parameters
+    ----------
+    word : str
+        word to score
+    word_occurence : dict[str, float]
+        dict of scores
+
+    Returns
+    -------
+    float
+        occurence score
+
+    Raises
+    ------
+    ValueError
+        when we could not score the word
+    """
+
+    for len_substr, substrs in _get_all_substrings(word):
+        scores = []
+        for substr in substrs:
+            if substr in word_occurence:
+                scores.append(word_occurence[substr])
+    
+        if len(scores) > 0:
+            if len_substr > 1:
+                return max(scores)
+            else:
+                return min(scores)
+    
+    raise ValueError(f"Could not score {word}")
 
 
 def build_word_graph(words: list[str]) -> dict[str, list[str]]:
