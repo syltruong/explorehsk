@@ -2,7 +2,22 @@ from itertools import product
 
 import pytest
 
-from src.utils import build_word_graph, generate_random_walk, WordGraphPathNotFoundException
+from src.utils import (
+    build_word_graph,
+    generate_random_walk,
+    WordGraphPathNotFoundException,
+    pinyin_to_number_tones
+)
+
+def test_pinyin_to_number_tones():
+    pinyin_with_accents = ["huí shǒu", "bèn dàn", "líng huó", "bà ba", "nǚ rén", "nǚ lu"]
+
+    pinyin_with_numbers = ["hui2 shou3", "ben4 dan4", "ling2 huo2", "ba4 ba5", "nv3 ren2",  "nv3 lu5"]
+
+    output = [pinyin_to_number_tones(word) for word in pinyin_with_accents]
+
+    for out_word, expected_out_word in zip(output, pinyin_with_numbers):
+        assert out_word == expected_out_word
 
 
 def test_build_word_graph():

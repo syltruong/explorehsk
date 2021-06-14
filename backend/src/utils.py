@@ -1,4 +1,5 @@
 import random
+import unicodedata
 
 from loguru import logger
 
@@ -10,7 +11,8 @@ TONE_ACCENTS = {
     5 : "\u0307",
 }
 
-PINYIN_V = "u" + "\u0308"
+TWO_DOTS_ACCENT = "\u0308" 
+PINYIN_V = "u" + TWO_DOTS_ACCENT
 
 VOWELS = ["a", "e", "i", "o", "u", "v"]
 
@@ -67,6 +69,55 @@ def add_pinyin_accents(pinyin: str) -> str:
                 break
     
     return " ".join(out_chars)
+
+
+def _strip_accents(s):
+    
+    ret = []
+    
+    for char_pinyin in unicodedata.normalize('NFD', s).split(" "): 
+        if TWO_DOTS_ACCENT in char_pinyin:
+            char_pinyin = char_pinyin.replace("u", "v")
+        
+        ret.append(
+            ''.join(c for c in char_pinyin if unicodedata.category(c) != "Mn")
+            )
+
+    return " ".join(ret)
+
+
+def pinyin_to_number_tones(pinyin: str) -> str:
+    """
+    Convert an accented pinyin string to a pinyin string
+    with numerals to indicate tone.
+
+    Parameters
+    ----------
+    pinyin : str
+        pinyin string with accents
+
+    Returns
+    -------
+    str
+        pinyin string with numbers instead of accents
+    """
+
+    words = pinyin.split(" ")
+
+    ret = []
+
+    for word in words:
+        # detect the accent and append the word to ret
+        word_no_accent = _strip_accents(word)
+        
+        for tone, accent in TONE_ACCENTS.items():
+            if accent in unicodedata.normalize("NFD", word):
+                ret.append(f"{word_no_accent}{tone}")
+                break
+        else:
+            ret.append(f"{word_no_accent}5")
+    
+    return " ".join(ret)
 
 
 def build_word_graph(words: list[str]) -> dict[str, list[str]]:
