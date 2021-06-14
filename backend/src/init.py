@@ -6,8 +6,8 @@ import numpy as np
 import pandas as pd
 from loguru import logger
 
-from src.config import PATH_TO_FASTTEXT_BIN, PATH_TO_HSK_CSV, PROJECTOR_DATA_DIR
-from src.utils import add_pinyin_accents
+from src.config import PATH_TO_FASTTEXT_BIN, PATH_TO_HSK_CSV, PROJECTOR_DATA_DIR, PATH_TO_SUBTLEX_CSV
+from src.utils import pinyin_to_number_tones, score_occurence
 
 
 def get_ft_model():
@@ -63,15 +63,26 @@ def get_char_embeddings(ft_model, char_to_words):
 
 def load_words() -> pd.DataFrame:
     df = pd.read_csv(PATH_TO_HSK_CSV)
+    df_occurence = pd.read_csv(PATH_TO_SUBTLEX_CSV)
+
+    word_occurence = df_occurence.set_index("Word")["logW"].to_dict()
+
+    df["level"] = df["level"].replace({"7-9" : "7"}, inplace=False).astype(int)
+    df["Id"] = df["level"].astype(str) + "-" + df["num"].astype(str)
+    in_cols = ["level", "simplified", "pinyin", "definitions", "Id"]
+    out_cols = ["HSK Level", "Word", "Pronunciation_with_accents", "Definition", "Id"]
     
-    columns = ["Word", "Pronunciation", "Definition"]
-    if "HSK Level" in df.columns:
-        columns.append("HSK Level")
-
-    df = df[columns]
-
-    df["Pronunciation_with_accents"] = df["Pronunciation"].apply(add_pinyin_accents)
-
+    df = df[in_cols].rename(columns=dict(zip(in_cols, out_cols)))
+    df["Pronunciation"] = df["Pronunciation_with_accents"].apply(pinyin_to_number_tones)
+    
+    def _score_occurence(word):
+        try:
+            return score_occurence(word, word_occurence)
+        except ValueError:
+            return 0.0
+    
+    df["Occurence"] = df["Word"].apply(_score_occurence)
+    
     return df
 
 
