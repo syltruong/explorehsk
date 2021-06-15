@@ -45,7 +45,7 @@ class Model(object):
         if hsk_level is not None:
             words_sub_df = words_sub_df.loc[words_sub_df["HSK Level"] <= hsk_level]
         
-        sample_id = words_sub_df.sample(1).values[0]
+        sample_id = words_sub_df.sample(1).index.values[0]
 
         return self.get_similar_from_id(sample_id, top=top, hsk_level=hsk_level)
 
@@ -71,7 +71,7 @@ class Model(object):
         adj_words = adj_words.iloc[:top]
 
         response = {
-            "source": self.words_df.loc[word_id].reset_index().to_dict("records"),
+            "source": self.words_df.loc[word_id].to_dict("records"),
             "most_similar": adj_words.reset_index().to_dict("records"),
         }
 
