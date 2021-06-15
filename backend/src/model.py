@@ -70,8 +70,11 @@ class Model(object):
         # top filtering
         adj_words = adj_words.iloc[:top]
 
+        source = self.words_df.loc[word_id].to_dict()
+        source["Id"] = word_id 
+
         response = {
-            "source": self.words_df.loc[word_id].to_dict("records"),
+            "source": source,
             "most_similar": adj_words.reset_index().to_dict("records"),
         }
 
