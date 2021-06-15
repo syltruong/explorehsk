@@ -31,6 +31,20 @@ def test_score_occurence():
         score_occurence("沿海", word_occurence)
 
 
+def test_get_adj_words():
+    word = "坚定"
+    char_to_words = {
+        "坚" : set(["坚果", "坚持", "坚定"]),
+        "定" : set(["坚定", "决定", "肯定"]), 
+    }
+
+    expected_adj_words = set(["坚果", "坚持", "决定", "肯定"])
+
+    adj_words = get_adj_words(word, char_to_words)
+
+    assert expected_adj_words == adj_words
+
+
 def test_pinyin_to_number_tones():
     pinyin_with_accents = ["huí shǒu", "bèn dàn", "líng huó", "bà ba", "nǚ rén", "nǚ lu"]
 

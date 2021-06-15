@@ -195,7 +195,22 @@ def build_char_to_words(words: list[str]) -> dict[str, set[str]]:
     return char_to_words
 
 
-def get_adj_words(word, char_to_words):
+def get_adj_words(word: str, char_to_words: dict[str, set[str]]) -> set[str]:
+    """
+    Get the set of adjacent words according to character usage
+
+    Parameters
+    ----------
+    word : str
+        the words for which you want to find neighbors
+    char_to_words : dict[str, set[str]]
+        the key is a Chinese character, the value is a set of words that are using this character
+
+    Returns
+    -------
+    set[str]
+        set of adjacent words
+    """
     
     ret = set().union(*[char_to_words[char] for char in word])
     ret.remove(word)
