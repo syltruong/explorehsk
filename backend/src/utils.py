@@ -289,5 +289,6 @@ def generate_random_walk(char_to_words: dict[str, set[str]], n_steps: int) -> li
     
     raise WordGraphPathNotFoundException
 
+
 class WordGraphPathNotFoundException(Exception):
     pass
