@@ -6,8 +6,6 @@ import pytest
 from src.utils import (
     build_char_to_words,
     get_adj_words,
-    generate_random_walk,
-    WordGraphPathNotFoundException,
     pinyin_to_number_tones,
     score_occurence
 )
@@ -34,7 +32,8 @@ def test_score_occurence():
 
 def test_get_adj_words(words_series: pd.Series, occurence_series: pd.Series):
     word_id = 2
-    
+    word = words_series.loc[word_id]
+
     expected_adj_words = list([4, 3, 1, 0])
 
     char_to_words = {
@@ -43,9 +42,9 @@ def test_get_adj_words(words_series: pd.Series, occurence_series: pd.Series):
     }
 
     adj_words = get_adj_words(
-        word_id, 
+        word_id=word_id,
+        word=word, 
         char_to_words=char_to_words, 
-        words=words_series, 
         occurence=occurence_series
     )
 

@@ -202,10 +202,10 @@ def build_char_to_words(words: pd.Series, word_len: int = None) -> dict[str, set
 
 
 def get_adj_words(
-    word_id: str,
+    word: str,
     char_to_words: dict[str, set[str]],
-    words: pd.Series,
-    occurence: pd.Series
+    occurence: pd.Series,
+    word_id: str = None,
     ) -> list[str]:
     """
     Get a list of adjacent words according to character usage,
@@ -228,8 +228,6 @@ def get_adj_words(
     list[str]
         set of adjacent word ids, ordered by occurence
     """
-    
-    word = words.loc[word_id]
 
     ret = sorted(
         set().union(*[char_to_words[char] for char in word]),
@@ -237,7 +235,8 @@ def get_adj_words(
         reverse=True
     )
 
-    ret.remove(word_id)
+    if word_id is not None:
+        ret.remove(word_id)
 
     return ret
 
