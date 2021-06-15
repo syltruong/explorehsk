@@ -31,7 +31,7 @@ def random():
 
 @app.route("/query")
 def query():
-    word_id = request.args.get('word_id')
+    word_id = request.args.get('wordId')
     top = request.args.get("top", default=20, type=int)
     hsk_level = request.args.get("hskLevel", default=None, type=int)
 
