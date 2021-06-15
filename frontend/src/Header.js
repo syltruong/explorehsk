@@ -28,7 +28,9 @@ function Nav(props) {
                 <button className={'en'} onClick={onRandom}>random</button> 
             </Link>
             
-            <button className={'en'}>search</button>
+            <Link to="/search">
+                <button className={'en'}>search</button>
+            </Link>
             
             <Link to="/about">
                 <button className={'en'}>about</button>
