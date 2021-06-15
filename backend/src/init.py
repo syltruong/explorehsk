@@ -1,3 +1,4 @@
+from pathlib import Path
 from typing import List
 
 from collections import defaultdict
@@ -61,7 +62,10 @@ def get_char_embeddings(ft_model, char_to_words):
     return char_embeddings
 
 
-def load_words() -> pd.DataFrame:
+def load_words(
+    path_hsk_csv : Path = PATH_TO_HSK_CSV, 
+    path_subtlex_csv: Path = PATH_TO_SUBTLEX_CSV
+    ) -> pd.DataFrame:
     """
     Return a Chinese vocabulary dataframe
 
@@ -71,9 +75,9 @@ def load_words() -> pd.DataFrame:
         expected output columns are
         ["HSK Level", "Word", "Pronunciation_with_accents", "Definition", "Id", "Occurence"] 
     """
-    
-    df = pd.read_csv(PATH_TO_HSK_CSV)
-    df_occurence = pd.read_csv(PATH_TO_SUBTLEX_CSV)
+
+    df = pd.read_csv(path_hsk_csv)
+    df_occurence = pd.read_csv(path_subtlex_csv)
 
     word_occurence = df_occurence.set_index("Word")["logW"].to_dict()
 
