@@ -19,9 +19,9 @@ for (let i=0; i < numberSuggestions; i++) {
 
 const baseUrl = process.env.REACT_APP_API_BASE_URL
 
-async function getSuggestions(word, hskLevel=4) {
+async function getSuggestions(wordId, hskLevel=4) {
     try {
-        const response = await fetch(baseUrl + `query?word=${word}&hskLevel=${hskLevel}`);
+        const response = await fetch(baseUrl + `query?wordId=${wordId}&hskLevel=${hskLevel}`);
         const jsonData = await response.json();
 
         return jsonData;
@@ -87,7 +87,7 @@ function Suggestions(props) {
 
     const wordComponents = words.map(
         word => (
-            <Link to={`/word/${word.Word}`}>
+            <Link to={`/wordId/${word.Id}`}>
                 <Suggestion 
                     word={word.Word} 
                     pronunciation={getPronunciation(word, usePinyinAccents)} 
@@ -110,22 +110,22 @@ function Suggestions(props) {
 
 function Main(props) {
 
-    const {word} = useParams()
+    const {wordId} = useParams()
     const {hskLevel, usePinyinAccents} = props
 
     const [centerWord, setCenterWord] = useState(exampleWord)
     const [suggestionWords, setSuggestionWords] = useState(exampleSuggestions)
 
     function populateFromWord() {
-        const jsonData = getSuggestions(word, hskLevel)        
+        const jsonData = getSuggestions(wordId, hskLevel)        
         
         jsonData.then(value => {
             setCenterWord(value.source)
-            setSuggestionWords(value.most_similar.slice(1)) 
+            setSuggestionWords(value.most_similar) 
         })
     }
 
-    useEffect(populateFromWord, [word, hskLevel])
+    useEffect(populateFromWord, [wordId, hskLevel])
 
     return (
         <main>

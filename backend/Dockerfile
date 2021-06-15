@@ -24,8 +24,8 @@ FROM dev AS builder
 # hack to optionally copy the fasttext bin file
 # and skip the following download step
 # put `cc.zh.300.bin` to skip the next step
-COPY Dockerfile cc.zh.300.bin* /
+# COPY Dockerfile cc.zh.300.bin* /
 
 # install zh language, results in 13Gb size image
 # this creates a file `/cc.zh.300.bin`
-RUN python -c "import fasttext.util; fasttext.util.download_model('zh', if_exists='ignore')" && rm -f /cc.zh.300.bin.gz
+# RUN python -c "import fasttext.util; fasttext.util.download_model('zh', if_exists='ignore')" && rm -f /cc.zh.300.bin.gz

@@ -1,29 +1,27 @@
 from collections import defaultdict
-import random
 from typing import Any, Dict, Optional
 
 import numpy as np
 import pandas as pd
 from loguru import logger
-from sklearn.metrics.pairwise import cosine_similarity
 
-from src.utils import build_word_graph
+from src.utils import build_char_to_words, get_adj_words 
 
 class Model(object):
-    def __init__(self, words_df: pd.DataFrame, embeddings: np.array):
+    def __init__(self, words_df: pd.DataFrame):
         """
 
         Parameters
         ----------
         words_df : pd.DataFrame
-            the expected columns as 'Word', 'Pronunciation', 'Definition'
+            the expected columns as 'Word', 'Pronunciation', 'Pronunciation_with_accents', 'Definition', 'Occurence'
+            with a 'Id' index
         """
-        
-        self.embeddings = embeddings
 
         # so that fields are in native Python type
         self.words_df = words_df.astype(object)
-        self.word_to_idx = {word: idx for idx, word in enumerate(words_df["Word"])}
+
+        self.char_to_words = build_char_to_words(words_df["Word"])
 
         logger.debug("Get HSK index lists")
         # each list contains the words of that level and below
@@ -35,60 +33,49 @@ class Model(object):
             for l in range(hsk_level, max_hsk_level + 1):
                 self.hsk_to_idx[l].append(idx)
 
-        logger.debug("Get distances")
-        distances = cosine_similarity(self.embeddings, self.embeddings)
-        self.sorted_idx = np.fliplr(np.argsort(distances, axis=1))
-        self.sorted_distances = np.fliplr(np.sort(distances, axis=1))
-
-        logger.debug("Build the word graph")
-        self.word_graph = build_word_graph(self.words_df["Word"])
 
     def ping(self):
         return f"I am alive with {len(self.word_to_idx)} words."
 
+
     def random(self, top: int = 20, hsk_level: Optional[int] = None) -> Dict[str, Any]:
 
+        words_sub_df = self.words_df
+
         if hsk_level is not None:
-            random_idx = random.choice(self.hsk_to_idx[hsk_level])
-        else:
-            random_idx = random.randint(0, len(self.word_to_idx) - 1)
+            words_sub_df = words_sub_df.loc[words_sub_df["HSK Level"] <= hsk_level]
+        
+        sample_id = words_sub_df.sample(1).index.values[0]
 
-        return self.get_similar_from_idx(random_idx, top=top, hsk_level=hsk_level)
+        return self.get_similar_from_id(sample_id, top=top, hsk_level=hsk_level)
 
-    def get_similar(self, word: str, top: int = 20, hsk_level: Optional[int] = None) -> Dict[str, Any]:
 
-        if word not in self.word_to_idx:
-            raise ValueError(f"Word not found in vocab list ({word})")
+    def get_similar_from_id(self, word_id: str = None, top: int = 20, hsk_level: Optional[int] = None) -> Dict[str, Any]:
 
-        word_idx = self.word_to_idx[word]
+        word = self.words_df["Word"].loc[word_id]
 
-        return self.get_similar_from_idx(word_idx, top=top, hsk_level=hsk_level)
+        adj_word_ids = get_adj_words(
+            word=word, 
+            char_to_words=self.char_to_words, 
+            occurence=self.words_df["Occurence"], 
+            word_id=word_id
+        )
 
-    def get_similar_from_idx(self, word_idx: int, top: int = 20, hsk_level: Optional[int] = None) -> Dict[str, Any]:
-
-        indices = self.sorted_idx[word_idx, :]
-        distances = self.sorted_distances[word_idx, :]
+        adj_words = self.words_df.loc[adj_word_ids]
 
         # level filtering
         if hsk_level is not None:
-            mask = np.isin(indices, self.hsk_to_idx[hsk_level])
-            indices = indices[mask]
-            distances = distances[mask]
+            adj_words = adj_words.loc[adj_words["HSK Level"] <= hsk_level]
 
         # top filtering
-        indices =  indices[:top]
-        distances =  distances[:top]
+        adj_words = adj_words.iloc[:top]
 
-        target_words = []
-        for idx, distance in zip(indices, distances):
-            word_attributes = self.words_df.iloc[idx].to_dict() 
-            target_words.append(
-                {**word_attributes, "distance": float(distance)}
-            )
+        source = self.words_df.loc[word_id].to_dict()
+        source["Id"] = word_id 
 
         response = {
-            "source": self.words_df.iloc[word_idx].to_dict(),
-            "most_similar": target_words,
+            "source": source,
+            "most_similar": adj_words.reset_index().to_dict("records"),
         }
 
         return response

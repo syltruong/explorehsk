@@ -27,17 +27,17 @@ async function getRandomWord() {
 
 function App() {
 
-    const [randomWord, setRandomWord] = useState("什么")
+    const [randomWordId, setRandomWordId] = useState("1-2")
     const [hskLevel, setHskLevel] = useLocalStorage("hskLevel", 4)
     const [usePinyinAccents, setUsePinyinAccents] = useLocalStorage("usePinyinAccents", false)
 
     const renderRandom = () => {
         const jsonData = getRandomWord()
         jsonData.then(value => {
-            setRandomWord(value.source.Word)
+            setRandomWordId(value.source.Id)
         })
 
-        return <Redirect to={`/word/${randomWord}`}/>
+        return <Redirect to={`/wordId/${randomWordId}`}/>
     }
 
     return (
@@ -60,7 +60,7 @@ function App() {
                         setUsePinyinAccents={setUsePinyinAccents}
                     /> 
                 </Route>
-                <Route path="/word/:word">
+                <Route path="/wordId/:wordId">
                     <Main hskLevel={hskLevel} usePinyinAccents={usePinyinAccents}/>
                 </Route>
 

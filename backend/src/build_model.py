@@ -3,7 +3,7 @@ from loguru import logger
 import pickle
 from pathlib import Path
 
-from src.init import load_words, get_ft_model, get_embeddings
+from src.init import load_words
 from src.model import Model
 
 
@@ -20,11 +20,7 @@ if __name__ == "__main__":
 
     words_df = load_words()
 
-    ft = get_ft_model()
-    logger.debug("Get embeddings")
-    embeddings = get_embeddings(ft, words_df["Word"], etymologic=True)    
-
-    model = Model(words_df, embeddings)
+    model = Model(words_df)
     output_path = output_dir / "model.pkl"
     with open(output_path, "wb") as f:
         pickle.dump(model, f)

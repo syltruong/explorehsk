@@ -1,5 +1,8 @@
+from collections import defaultdict
 import random
+import unicodedata
 
+import pandas as pd
 from loguru import logger
 
 TONE_ACCENTS = {
@@ -10,7 +13,8 @@ TONE_ACCENTS = {
     5 : "\u0307",
 }
 
-PINYIN_V = "u" + "\u0308"
+TWO_DOTS_ACCENT = "\u0308" 
+PINYIN_V = "u" + TWO_DOTS_ACCENT
 
 VOWELS = ["a", "e", "i", "o", "u", "v"]
 
@@ -69,7 +73,100 @@ def add_pinyin_accents(pinyin: str) -> str:
     return " ".join(out_chars)
 
 
-def build_word_graph(words: list[str]) -> dict[str, list[str]]:
+def _strip_accents(s: str):
+    
+    ret = []
+    
+    for char_pinyin in unicodedata.normalize('NFD', s).split(" "): 
+        if TWO_DOTS_ACCENT in char_pinyin:
+            char_pinyin = char_pinyin.replace("u", "v")
+        
+        ret.append(
+            ''.join(c for c in char_pinyin if unicodedata.category(c) != "Mn")
+            )
+
+    return " ".join(ret)
+
+
+def pinyin_to_number_tones(pinyin: str) -> str:
+    """
+    Convert an accented pinyin string to a pinyin string
+    with numerals to indicate tone.
+
+    Parameters
+    ----------
+    pinyin : str
+        pinyin string with accents
+
+    Returns
+    -------
+    str
+        pinyin string with numbers instead of accents
+    """
+
+    words = pinyin.split(" ")
+
+    ret = []
+
+    for word in words:
+        # detect the accent and append the word to ret
+        word_no_accent = _strip_accents(word)
+        
+        for tone, accent in TONE_ACCENTS.items():
+            if accent in unicodedata.normalize("NFD", word):
+                ret.append(f"{word_no_accent}{tone}")
+                break
+        else:
+            ret.append(f"{word_no_accent}5")
+    
+    return " ".join(ret)
+
+
+def _get_all_substrings(word: str, min_len: int=1):
+    for j in range(len(word), min_len - 1, -1):
+        yield j, [word[i:i+j] for i in range(0, len(word) - j + 1)]
+
+
+def score_occurence(word: str, word_occurence: dict[str, float]) -> float:
+    """
+    Get an occurence score for a given input word.
+    If the word is not found in the dict, try scoring the substrings, 
+    from the longest ones to the shortest ones.
+
+    Parameters
+    ----------
+    word : str
+        word to score
+    word_occurence : dict[str, float]
+        dict of scores
+
+    Returns
+    -------
+    float
+        occurence score
+
+    Raises
+    ------
+    ValueError
+        when we could not score the word
+    """
+
+    for len_substr, substrs in _get_all_substrings(word):
+        scores = []
+        for substr in substrs:
+            if substr in word_occurence:
+                scores.append(word_occurence[substr])
+    
+        if len(scores) > 0:
+            if len_substr > 1:
+                return max(scores)
+            else:
+                return min(scores)
+    
+    raise ValueError(f"Could not score {word}")
+
+
+def build_char_to_words(words: pd.Series, word_len: int = None) -> dict[str, set[str]]:
     """
     Build graph of words.
 
@@ -80,34 +177,71 @@ def build_word_graph(words: list[str]) -> dict[str, list[str]]:
     ----------
     words : list[str]
         List of words
+    word_len : int, Optional
+        defaults to None
+        if not none restricts the length in characters of the words to keep
+        a natural setting would be to set it to 2
 
     Returns
     -------
     dict[str, list[str]]
-        Graph of words
-        Only words of exactly two characters are kept.
+        Char to list of words ids
     """
 
-    words = [word for word in words if len(word)==2]
+    char_to_words = defaultdict(set)
 
-    def _words_are_linked(word1, word2):
-        if word1 == word2:
-            return False
+    for idx, word in words.iteritems():
         
-        if (word1[0] in word2) or (word1[1] in word2):
-            return True
-        
-        return False
-    
-    word_graph = {
-        word : [w for w in words if _words_are_linked(word, w)]
-        for word in words
-    }
+        if word_len is not None and len(word) != word_len:
+            continue
 
-    return word_graph
+        for char in word:
+            char_to_words[char].add(idx)
+
+    return char_to_words
 
 
-def generate_random_walk(word_graph: dict[str, list[str]], n_steps: int) -> list[str]:
+def get_adj_words(
+    word: str,
+    char_to_words: dict[str, set[str]],
+    occurence: pd.Series,
+    word_id: str = None,
+    ) -> list[str]:
+    """
+    Get a list of adjacent words according to character usage,
+    ordered according to occurence score
+
+    Parameters
+    ----------
+    word_id : str
+        the word id for which you want to find neighbors
+    char_to_words : dict[str, set[str]]
+        the key is a Chinese character, the value is a set of word ids that are using this character
+    words : pd.Series
+        series with word id as index and words as column value
+    occurence : pd.Series
+        series with word id as index and occurence score as column value,
+        the higher, the more frequent
+
+    Returns
+    -------
+    list[str]
+        set of adjacent word ids, ordered by occurence
+    """
+
+    ret = sorted(
+        set().union(*[char_to_words[char] for char in word]),
+        key=lambda idx : occurence.loc[idx],
+        reverse=True
+    )
+
+    if word_id is not None:
+        ret.remove(word_id)
+
+    return ret
+
+
+def generate_random_walk(char_to_words: dict[str, set[str]], n_steps: int) -> list[str]:
     """
     Generate a random walk in the word graph.
 
@@ -124,9 +258,9 @@ def generate_random_walk(word_graph: dict[str, list[str]], n_steps: int) -> list
         list of word series
     """
 
-    def _is_valid_candidate(word, past_words, word_graph):
+    def _is_valid_candidate(word, past_words):
         for past_word in past_words:
-            if word in word_graph[past_word]:
+            if word in get_adj_words(past_word, char_to_words):
                 return False
         return True
 
@@ -152,7 +286,7 @@ def generate_random_walk(word_graph: dict[str, list[str]], n_steps: int) -> list
                 if len(ret) >= n_steps:
                     return ret
                 
-                adj_words = [w for w in word_graph[word] if _is_valid_candidate(w, ret[:-1], word_graph)]
+                adj_words = [w for w in get_adj_words(word, char_to_words) if _is_valid_candidate(w, ret[:-1])]
 
                 random.shuffle(adj_words)
                 
@@ -162,7 +296,7 @@ def generate_random_walk(word_graph: dict[str, list[str]], n_steps: int) -> list
         
         return None
 
-    words = list(word_graph.keys())
+    words = list(set().union(*char_to_words.values()))
     random.shuffle(words)
 
     for attempt in range(MAX_RANDOM_WALK_ATTEMPTS):
@@ -177,6 +311,7 @@ def generate_random_walk(word_graph: dict[str, list[str]], n_steps: int) -> list
             return candidate_walk
     
     raise WordGraphPathNotFoundException
+
 
 class WordGraphPathNotFoundException(Exception):
     pass
