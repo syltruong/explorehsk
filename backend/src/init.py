@@ -62,6 +62,16 @@ def get_char_embeddings(ft_model, char_to_words):
 
 
 def load_words() -> pd.DataFrame:
+    """
+    Return a Chinese vocabulary dataframe
+
+    Returns
+    -------
+    pd.DataFrame
+        expected output columns are
+        ["HSK Level", "Word", "Pronunciation_with_accents", "Definition", "Id", "Occurence"] 
+    """
+    
     df = pd.read_csv(PATH_TO_HSK_CSV)
     df_occurence = pd.read_csv(PATH_TO_SUBTLEX_CSV)
 
