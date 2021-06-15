@@ -2,6 +2,7 @@ from collections import defaultdict
 import random
 import unicodedata
 
+import pandas as pd
 from loguru import logger
 
 TONE_ACCENTS = {
@@ -165,7 +166,7 @@ def score_occurence(word: str, word_occurence: dict[str, float]) -> float:
     raise ValueError(f"Could not score {word}")
 
 
-def build_char_to_words(words: list[str]) -> dict[str, set[str]]:
+def build_char_to_words(words: pd.Series, word_len: int = None) -> dict[str, set[str]]:
     """
     Build graph of words.
 
@@ -176,44 +177,67 @@ def build_char_to_words(words: list[str]) -> dict[str, set[str]]:
     ----------
     words : list[str]
         List of words
+    word_len : int, Optional
+        defaults to None
+        if not none restricts the length in characters of the words to keep
+        a natural setting would be to set it to 2
 
     Returns
     -------
     dict[str, list[str]]
-        Graph of words
-        Only words of exactly two characters are kept.
+        Char to list of words ids
     """
-
-    words = [word for word in words if len(word)==2]
 
     char_to_words = defaultdict(set)
 
-    for word in words:
+    for idx, word in words.iteritems():
+        
+        if word_len is not None and len(word) != word_len:
+            continue
+
         for char in word:
-            char_to_words[char].add(word)
+            char_to_words[char].add(idx)
 
     return char_to_words
 
 
-def get_adj_words(word: str, char_to_words: dict[str, set[str]]) -> set[str]:
+def get_adj_words(
+    word_id: str,
+    char_to_words: dict[str, set[str]],
+    words: pd.Series,
+    occurence: pd.Series
+    ) -> list[str]:
     """
-    Get the set of adjacent words according to character usage
+    Get a list of adjacent words according to character usage,
+    ordered according to occurence score
 
     Parameters
     ----------
-    word : str
-        the words for which you want to find neighbors
+    word_id : str
+        the word id for which you want to find neighbors
     char_to_words : dict[str, set[str]]
-        the key is a Chinese character, the value is a set of words that are using this character
+        the key is a Chinese character, the value is a set of word ids that are using this character
+    words : pd.Series
+        series with word id as index and words as column value
+    occurence : pd.Series
+        series with word id as index and occurence score as column value,
+        the higher, the more frequent
 
     Returns
     -------
-    set[str]
-        set of adjacent words
+    list[str]
+        set of adjacent word ids, ordered by occurence
     """
     
-    ret = set().union(*[char_to_words[char] for char in word])
-    ret.remove(word)
+    word = words.loc[word_id]
+
+    ret = sorted(
+        set().union(*[char_to_words[char] for char in word]),
+        key=lambda idx : occurence.loc[idx],
+        reverse=True
+    )
+
+    ret.remove(word_id)
 
     return ret
 
