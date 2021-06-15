@@ -6,11 +6,6 @@ from src.model import Model
 from flask import Flask, json, jsonify, request
 from flask_cors import CORS
 
-from src.utils import (
-    generate_random_walk, 
-    WordGraphPathNotFoundException, 
-    MAX_RANDOM_WALK_ATTEMPTS
-)
 
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
@@ -36,33 +31,34 @@ def random():
 
 @app.route("/query")
 def query():
-    word = request.args.get('word')
+    word_id = request.args.get('word_id')
     top = request.args.get("top", default=20, type=int)
     hsk_level = request.args.get("hskLevel", default=None, type=int)
 
-    if word is not None:
+    if word_id is not None:
         try:
-            most_similar = model.get_similar(word=word, top=top, hsk_level=hsk_level)
+            most_similar = model.get_similar_from_id(word_id=word_id, top=top, hsk_level=hsk_level)
             return jsonify(most_similar)
         except ValueError:
-            return f'word {word} does not exist in vocab', 400 
+            return f'word id {word_id} does not exist in vocab', 400 
     else:
         return 'Must provide argument `word`', 400
 
-@app.route("/new_game")
-def new_game():
-    # TODO: support filtering games according to HSK levels
-    # hsk_level = request.args.get("hskLevel", default=None, type=int)
-    n_steps = request.args.get("nSteps", default=4, type=int)
+# TODO: redo with new dataset
+# @app.route("/new_game")
+# def new_game():
+#     # TODO: support filtering games according to HSK levels
+#     # hsk_level = request.args.get("hskLevel", default=None, type=int)
+#     n_steps = request.args.get("nSteps", default=4, type=int)
 
-    try:
-        walk = generate_random_walk(model.word_graph, n_steps=n_steps)
-        return jsonify(
-            {
-                'start' : walk[0],
-                'target' : walk[-1],
-                'solution' : walk 
-            }
-        )
-    except WordGraphPathNotFoundException:
-        return f'Did not find a new game path after {MAX_RANDOM_WALK_ATTEMPTS} attempts'
+#     try:
+#         walk = generate_random_walk(model.word_graph, n_steps=n_steps)
+#         return jsonify(
+#             {
+#                 'start' : walk[0],
+#                 'target' : walk[-1],
+#                 'solution' : walk 
+#             }
+#         )
+#     except WordGraphPathNotFoundException:
+#         return f'Did not find a new game path after {MAX_RANDOM_WALK_ATTEMPTS} attempts'
