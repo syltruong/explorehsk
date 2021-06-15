@@ -97,7 +97,7 @@ def load_words(
     
     df["Occurence"] = df["Word"].apply(_score_occurence)
     
-    return df
+    return df.set_index("Id")
 
 
 def main():
