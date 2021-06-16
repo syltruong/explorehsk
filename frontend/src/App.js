@@ -14,9 +14,9 @@ import './App.css';
 
 const baseUrl = process.env.REACT_APP_API_BASE_URL
 
-async function getRandomWord() {
+async function getRandomWord(hskLevel) {
     try {
-        const response = await fetch(baseUrl + `random`);
+        const response = await fetch(baseUrl + `random?hskLevel=${hskLevel}`);
         const jsonData = await response.json();
         return jsonData;
 
@@ -33,7 +33,7 @@ function App() {
     const [usePinyinAccents, setUsePinyinAccents] = useLocalStorage("usePinyinAccents", false)
 
     const renderRandom = () => {
-        const jsonData = getRandomWord()
+        const jsonData = getRandomWord(hskLevel)
         jsonData.then(value => {
             setRandomWordId(value.source.Id)
         })
