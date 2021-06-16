@@ -44,7 +44,7 @@ function Center(props) {
             <div id={'center-word'} className={'zh'}>{word.Word}</div>
             <div className={'en meta'}>
                 <div>{getPronunciation(word, usePinyinAccents)}</div>
-                <div>{word.Definition}</div>
+                <div>[HSK {word.HSK_Level}] {word.Definition}</div>
             </div>
         </div>
     )
@@ -53,7 +53,7 @@ function Center(props) {
 
 
 function Suggestion(props) {
-    const {word, pronunciation, translation} = props;
+    const {word, pronunciation, hskLevel, translation} = props;
 
     const [displayMeta, setDisplayMeta] = useState('none')
 
@@ -74,7 +74,7 @@ function Suggestion(props) {
                 style={{display: displayMeta}}
             >
                 <div>{pronunciation}</div>
-                <div>{translation}</div>
+                <div>[HSK {hskLevel}] {translation}</div>
             </div>
         </div>
     )
@@ -91,6 +91,7 @@ function Suggestions(props) {
                 <Suggestion 
                     word={word.Word} 
                     pronunciation={getPronunciation(word, usePinyinAccents)} 
+                    hskLevel={word.HSK_Level}
                     translation={word.Definition}
                     // key={word.word + word.pronunciation} 
                     // TODO: set a unique key, will likely come from the backend
