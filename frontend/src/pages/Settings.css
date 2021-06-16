@@ -14,6 +14,12 @@ label:hover, input:hover {
     cursor: pointer;
 }
 
+section {
+    padding: 0 1em;
+    height: calc(100vh - 155px);
+    overflow-y: scroll;
+}
+
 section button {
     font-size: 1.5em;
     color: #FFA1A1;
