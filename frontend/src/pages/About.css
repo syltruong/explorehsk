@@ -1,7 +1,10 @@
 section {
     color: #32D6B8;
     max-width: 500px;
-    margin: 5em auto;
+    margin: 0 auto;
+    padding: 0 1em;
+    height: calc(100vh - 155px);
+    overflow-y: scroll;
 }
 
 section h2 {
