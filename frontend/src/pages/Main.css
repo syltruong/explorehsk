@@ -53,6 +53,14 @@ main {
     white-space: nowrap;
 }
 
+.meta.hidden {
+    display: block
+}
+
+.suggestion-translation {
+    display: none;
+}
+
 @media (min-width: 972px){
     main {
         flex-direction: row;
@@ -89,5 +97,13 @@ main {
 
     .suggestion .meta {
         text-align: left
+    }
+
+    .meta.hidden {
+        display: none
+    }
+
+    .suggestion-translation {
+        display: block;
     }
 }
