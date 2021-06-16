@@ -82,7 +82,7 @@ def load_words(
     word_occurence = df_occurence.set_index("Word")["logW"].to_dict()
 
     df["level"] = df["level"].replace({"7-9" : "7"}, inplace=False).astype(int)
-    df["Id"] = df["level"].astype(str) + "-" + df["num"].astype(str)
+    df["Id"] = df["level"].astype(str) + df["num"].astype(str).apply(lambda elt : elt.zfill(5))
     in_cols = ["level", "simplified", "pinyin", "definitions", "Id"]
     out_cols = ["HSK_Level", "Word", "Pronunciation_with_accents", "Definition", "Id"]
     

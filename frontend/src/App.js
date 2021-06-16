@@ -28,7 +28,7 @@ async function getRandomWord(hskLevel) {
 
 function App() {
 
-    const [randomWordId, setRandomWordId] = useState("1-2")
+    const [randomWordId, setRandomWordId] = useState("100002")
     const [hskLevel, setHskLevel] = useLocalStorage("hskLevel", 4)
     const [usePinyinAccents, setUsePinyinAccents] = useLocalStorage("usePinyinAccents", false)
 
