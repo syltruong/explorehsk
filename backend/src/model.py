@@ -27,9 +27,9 @@ class Model(object):
         # each list contains the words of that level and below
         # ie. 4 : [all words of level 4 and below]
         
-        max_hsk_level = words_df["HSK Level"].max()
+        max_hsk_level = words_df["HSK_Level"].max()
         self.hsk_to_idx = defaultdict(list)
-        for idx, hsk_level in enumerate(words_df["HSK Level"]):
+        for idx, hsk_level in enumerate(words_df["HSK_Level"]):
             for l in range(hsk_level, max_hsk_level + 1):
                 self.hsk_to_idx[l].append(idx)
 
@@ -43,7 +43,7 @@ class Model(object):
         words_sub_df = self.words_df
 
         if hsk_level is not None:
-            words_sub_df = words_sub_df.loc[words_sub_df["HSK Level"] <= hsk_level]
+            words_sub_df = words_sub_df.loc[words_sub_df["HSK_Level"] <= hsk_level]
         
         sample_id = words_sub_df.sample(1).index.values[0]
 
@@ -65,7 +65,7 @@ class Model(object):
 
         # level filtering
         if hsk_level is not None:
-            adj_words = adj_words.loc[adj_words["HSK Level"] <= hsk_level]
+            adj_words = adj_words.loc[adj_words["HSK_Level"] <= hsk_level]
 
         # top filtering
         adj_words = adj_words.iloc[:top]

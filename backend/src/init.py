@@ -73,7 +73,7 @@ def load_words(
     -------
     pd.DataFrame
         expected output columns are
-        ["HSK Level", "Word", "Pronunciation_with_accents", "Definition", "Id", "Occurence"] 
+        ["HSK_Level", "Word", "Pronunciation_with_accents", "Definition", "Id", "Occurence"] 
     """
 
     df = pd.read_csv(path_hsk_csv)
@@ -84,7 +84,7 @@ def load_words(
     df["level"] = df["level"].replace({"7-9" : "7"}, inplace=False).astype(int)
     df["Id"] = df["level"].astype(str) + "-" + df["num"].astype(str)
     in_cols = ["level", "simplified", "pinyin", "definitions", "Id"]
-    out_cols = ["HSK Level", "Word", "Pronunciation_with_accents", "Definition", "Id"]
+    out_cols = ["HSK_Level", "Word", "Pronunciation_with_accents", "Definition", "Id"]
     
     df = df[in_cols].rename(columns=dict(zip(in_cols, out_cols)))
     df["Pronunciation"] = df["Pronunciation_with_accents"].apply(pinyin_to_number_tones)
