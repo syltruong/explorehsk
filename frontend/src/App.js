@@ -5,6 +5,7 @@ import {Switch, Route, Redirect} from 'react-router-dom'
 import Header from './Header.js';
 import Main from './pages/Main.js';
 import About from './pages/About.js';
+import Search from './pages/Search.js';
 import Settings from './pages/Settings.js';
 
 import useLocalStorage from './utils/use-local-storage.js';
@@ -51,6 +52,8 @@ function App() {
                     render={renderRandom}
                 />
                  
+                <Route exact path="/search" component={Search} />
+                
                 <Route exact path="/about" component={About} />
                 <Route exact path="/settings">
                     <Settings 
