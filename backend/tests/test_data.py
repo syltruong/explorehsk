@@ -7,4 +7,4 @@ def test_dedup_entries(words_df: pd.DataFrame):
     ret = dedup_entries(words_df)
 
     assert len(ret) == len(words_df) - 1
-    assert len(ret.drop_duplicates(["HSK Level", "Word", "Pronunciation"])) == len(ret)
+    assert len(ret.drop_duplicates(["HSK_Level", "Word", "Pronunciation"])) == len(ret)

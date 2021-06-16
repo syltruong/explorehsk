@@ -35,6 +35,6 @@ def words_df() -> pd.DataFrame:
             "Word" : words, 
             "Pronunciation" : pronunciations, 
             "Definition" : definitions,
-            "HSK Level" : hsk_levels
+            "HSK_Level" : hsk_levels
         },
     )
