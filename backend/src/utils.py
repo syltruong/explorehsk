@@ -1,4 +1,5 @@
-from collections import defaultdict
+from collections import defaultdict, Counter
+from itertools import chain
 import random
 import unicodedata
 
@@ -229,9 +230,15 @@ def get_adj_words(
         set of adjacent word ids, ordered by occurence
     """
 
+    counts = Counter(
+        chain(
+            *[char_to_words.get(char, []) for char in word]
+        )
+    )
+
     ret = sorted(
-        set().union(*[char_to_words[char] for char in word]),
-        key=lambda idx : occurence.loc[idx],
+        counts.keys(),
+        key=lambda idx : (counts[idx], occurence.loc[idx]),
         reverse=True
     )
 

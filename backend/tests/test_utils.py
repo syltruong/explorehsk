@@ -35,6 +35,7 @@ def test_get_adj_words(words_series: pd.Series, occurence_series: pd.Series):
     word = words_series.loc[word_id]
 
     expected_adj_words = list([4, 3, 1, 0])
+    expected_adj_words_no_filtering = list([2, 4, 3, 1, 0]) 
 
     char_to_words = {
         "坚" : [0, 1, 2],
@@ -42,16 +43,24 @@ def test_get_adj_words(words_series: pd.Series, occurence_series: pd.Series):
     }
 
     adj_words = get_adj_words(
-        word_id=word_id,
         word=word, 
         char_to_words=char_to_words, 
-        occurence=occurence_series
+        occurence=occurence_series,
+        word_id=word_id,
     )
 
-    assert len(expected_adj_words) == len(adj_words)
     for val1, val2 in zip(expected_adj_words, adj_words):
         assert val1 == val2
+    
+    adj_words = get_adj_words(
+        word=word, 
+        char_to_words=char_to_words, 
+        occurence=occurence_series,
+    )
 
+    for val1, val2 in zip(expected_adj_words_no_filtering, adj_words):
+        assert val1 == val2
+    
 
 def test_pinyin_to_number_tones():
     pinyin_with_accents = ["huí shǒu", "bèn dàn", "líng huó", "bà ba", "nǚ rén", "nǚ lu"]
