@@ -54,12 +54,19 @@ class Model(object):
 
         word = self.words_df["Word"].loc[word_id]
 
+        response = self.get_similar(query_str=word, top=top, hsk_level=hsk_level, word_id=word_id)
+
+        return response
+
+
+    def get_similar(self, query_str: str = None, top: int = 20, hsk_level: Optional[int] = None, word_id: Optional[str] = None) -> Dict[str, Any]:
+
         adj_word_ids = get_adj_words(
-            word=word, 
+            word=query_str, 
             char_to_words=self.char_to_words, 
             occurence=self.words_df["Occurence"], 
             word_id=word_id
-        )
+        )        
 
         adj_words = self.words_df.loc[adj_word_ids]
 
@@ -69,13 +76,21 @@ class Model(object):
 
         # top filtering
         adj_words = adj_words.iloc[:top]
+        most_similar = adj_words.reset_index().to_dict("records")
 
-        source = self.words_df.loc[word_id].to_dict()
-        source["Id"] = word_id 
+        if word_id is not None:
+            source = self.words_df.loc[word_id].to_dict()
+            source["Id"] = word_id 
 
-        response = {
-            "source": source,
-            "most_similar": adj_words.reset_index().to_dict("records"),
-        }
+            response = {
+                "source": source,
+                "most_similar": most_similar
+            }
+        
+        else:
+            response = {
+                "query" : query_str,
+                "most_similar": most_similar
+            }
 
         return response
