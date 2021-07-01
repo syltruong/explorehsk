@@ -26,4 +26,36 @@ def dedup_entries(words_df: pd.DataFrame) -> pd.DataFrame:
     ret = words_df.loc[words_df.index.isin(df.index)]
 
     return ret
+
+
+def get_comprehensive_pinyin_string_series(
+    pinyin_with_accents : pd.Series, 
+    pinyin_with_numbers : pd.Series
+    ) -> pd.Series:
+    """
+    Get a pandas series of concatenated pinyin spellings
+
+    Parameters
+    ----------
+    pinyin_with_accents : pd.Series
+        pinyin series with accents
+    pinyin_with_numbers : pd.Series
+        pinyin series with numbers
+
+    Returns
+    -------
+    pd.Series
+        series of concatenated strings
+    """
+
+
+    res = pinyin_with_accents + " " + pinyin_with_numbers
+    
+    res = res + " " + pinyin_with_accents.apply(lambda pinyin : pinyin.replace(" ", ""))
+    res = res + " " + pinyin_with_numbers.apply(lambda pinyin : pinyin.replace(" ", ""))
+
+    res = res + " " + pinyin_with_numbers.apply(lambda pinyin : " ".join([elt[:-1] for elt in pinyin.split(" ")]))
+    res = res + " " + pinyin_with_numbers.apply(lambda pinyin : "".join([elt[:-1] for elt in pinyin.split(" ")]))
+
+    return res
     

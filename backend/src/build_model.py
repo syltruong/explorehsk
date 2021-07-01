@@ -3,7 +3,7 @@ from loguru import logger
 import pickle
 from pathlib import Path
 
-from src.data import dedup_entries
+from src.data import dedup_entries, get_comprehensive_pinyin_string_series
 from src.init import load_words
 from src.model import Model
 
@@ -21,6 +21,12 @@ if __name__ == "__main__":
 
     words_df = load_words()
     words_df = dedup_entries(words_df)
+    
+    # TODO: get all column names in a static enum structure
+    words_df["Pinyin string"] = get_comprehensive_pinyin_string_series(
+        words_df["Pronunciation_with_accents"],
+        words_df["Pronunciation"]
+    )
 
     model = Model(words_df)
     output_path = output_dir / "model.pkl"

@@ -1,6 +1,7 @@
 from collections import defaultdict
 from typing import Any, Dict, Optional
 
+from fuzzywuzzy import fuzz
 import numpy as np
 import pandas as pd
 from loguru import logger
@@ -92,5 +93,64 @@ class Model(object):
                 "query" : query_str,
                 "most_similar": most_similar
             }
+
+        return response
+
+    def search(self, query_str: str, top: int = 20) -> Dict[str, Any]:
+        """
+        Perform a search on the self.words_df table,
+        according to a given string
+
+        Get sorted results according to descending match score, occurence
+
+        Parameters
+        ----------
+        query_str : str
+            the query str from which we are performing the search
+        top : int, optional
+            max number of results to return, by default 20
+
+        Returns
+        -------
+        Dict[str, Any]
+            reponse
+        """
+
+        query_cols = [
+            "Word", 
+            "Definition", 
+            "Pinyin string"
+        ]
+
+        # only keep the full matches
+        results = self.words_df.loc[
+            pd.concat(
+                [
+                    self.words_df[col].str.contains(query_str)
+                    for col in query_cols
+                ],
+                axis=1
+            ).any(axis=1)
+        ]
+
+        # append a score column to sort the results
+        results["score"] = pd.concat(
+            [
+                results[col].apply(
+                    lambda elt : fuzz.token_set_ratio(query_str, elt.lower())
+                )
+                for col in query_cols
+            ],
+            axis=1
+        ).max(axis=1)
+
+        results = results.sort_values(["score", "Occurence"], ascending=False).iloc[:top]
+        results = results.reset_index().to_dict("records")
+
+        # return the sorted results    
+        response = {
+            "query" : query_str,
+            "search_results" : results
+        }
 
         return response
