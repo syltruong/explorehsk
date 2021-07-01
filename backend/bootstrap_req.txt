@@ -5,3 +5,4 @@ loguru
 flask
 sklearn
 flask-cors
+fuzzywuzzy[speedup]
